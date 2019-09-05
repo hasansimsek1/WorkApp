@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorkApp.Common\WorkApp.Common.csproj" />
+    <ProjectReference Include="..\WorkApp.Respository\WorkApp.Respository.csproj" />
+  </ItemGroup>
+
+</Project>

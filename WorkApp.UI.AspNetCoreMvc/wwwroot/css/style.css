@@ -1,0 +1,443 @@
+body {
+  width: 100%;
+  height: 100%;
+  font-size: 13px;
+  font-family: "Roboto";
+}
+main {
+  width: 100%;
+  height: 100%;
+}
+header {
+  width: 100%;
+  height: 55px;
+  background: #333;
+  display: block;
+}
+.menuwrapper {
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 55px;
+}
+.logowrapper {
+  width: 65px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  float: left;
+  align-content: center;
+  align-items: center;
+}
+.logo {
+  width: 50px;
+  height: 45px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.desktopmenu {
+  width: 50%;
+  height: 55px;
+  float: right;
+}
+.desktopmenu ul {
+  display: block;
+  width: 100%;
+  display: flex;
+}
+a {
+  font-family: "Raleway";
+}
+p {
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+
+.desktopmenu ul li {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+.desktopmenu ul li a {
+  color: #fe2e00;
+  width: 90%;
+  height: 35px;
+  line-height: 35px;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 5px;
+  background: rgb(58, 58, 58);
+  text-align: center;
+}
+section {
+  width: 100%;
+  background: #fdfdfd;
+  height: 100%;
+  margin-bottom: 25px;
+}
+.contentwrapperdash {
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.ikilidashboardcontent {
+  display: flex;
+  justify-content: space-between;
+}
+.activekanbanwrap {
+  width: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+  background: #cecccc;
+  margin-top: 20px;
+  min-height: 150px;
+}
+.activekanbanwrap:first-child {
+  margin-left: 0px;
+}
+.activekanbanwrap:last-child {
+  margin-right: 0px;
+}
+.activesayisi {
+  padding: 0 15px;
+}
+.baslikactive {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  background: #333;
+  color: #ddd;
+  padding: 15px;
+}
+.uzunactivekanban {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 20px;
+  min-height: 200px;
+  background: #cecccc;
+}
+.yataylist {
+  width: 97%;
+  padding: 5px;
+  margin-left: auto;
+  cursor: pointer;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: block;
+  background: #ddd;
+  border-radius: 5px;
+  min-height: 40px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  transition: 1s;
+  justify-content: space-between;
+}
+.yataylist:first-child {
+  margin-top: 0px;
+}
+.sollist {
+  padding-left: 15px;
+  margin-right: 15px;
+  width: 5.5%;
+}
+.ortalist {
+  flex-grow: 5;
+  width: 20%;
+  border-left: 1px solid #fe2e00;
+  padding-left: 15px;
+  text-align: left;
+}
+.saglist {
+  border-left: 1px solid #fe2e00;
+  padding-left: 15px;
+  flex-grow: 3;
+}
+.noticerikyazisi {
+  text-overflow: ellipsis;
+  margin: 0px;
+  font-weight: 600;
+}
+.yataylistwrapper {
+  width: 100%;
+  max-height: 300px;
+  overflow: auto;
+}
+.yataylist:hover {
+  transition: 1s;
+  background: rgb(156, 156, 156);
+}
+footer {
+  width: 100%;
+  background: #333;
+  height: 300px;
+  display: block;
+}
+.footerwrapper {
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  height: 300px;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+}
+.leftinfoot {
+  float: left;
+  width: 50%;
+}
+.leftinfoot img {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+.rightinfoot {
+  font-size: 12px;
+  color: #fdfdfd;
+}
+.footbilginfo {
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  background: rgb(36, 36, 36);
+  color: #fe2e00;
+  font-family: "Raleway";
+  text-align: center;
+  margin: 0;
+}
+/* KANBAN CSS */
+.kanbanwrapper {
+  width: 92%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  display: block;
+}
+.kanbantop {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  align-content: center;
+  align-items: center;
+  width: 100%;
+}
+.kanbansecwrapper {
+  background: #ccc;
+  width: 100%;
+  overflow: auto;
+  height: 450px;
+  padding-top: 15px;
+}
+.listitem {
+  width: 5%;
+  padding-left: 15px;
+  border-left: 1px solid #fe2e00;
+  position: relative;
+}
+.inpcheck {
+  width: 25px;
+  text-align: center;
+  height: 25px;
+}
+.listitem:first-child {
+  border: 0;
+}
+.addbtn {
+  background: #fe2e00;
+  border: 0px;
+  height: 35px;
+  text-align: center;
+  font-weight: 700;
+  color: #ddd;
+  padding: 0 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 1s;
+}
+.addbtn:hover {
+  background: #cf2600;
+  transition: 1s;
+}
+.cancelbtn {
+  background: rgb(144, 0, 0);
+  border: 0px;
+  height: 35px;
+  text-align: center;
+  font-weight: 700;
+  color: #ddd;
+  padding: 0 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 1s;
+}
+.uzunitem {
+  width: 100%;
+}
+.ortaitem {
+  width: 7%;
+}
+.dikeylist {
+  width: 22%;
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  height: 96%;
+  padding-bottom: 10px;
+  overflow: auto;
+  margin-left: 5px;
+}
+.dikeylist:last-child {
+  margin-right: 5px;
+}
+.ustlist {
+  width: 100%;
+  text-align: center;
+  background: #333;
+  color: #ddd;
+  position: sticky;
+  top: 0;
+  min-height: 30px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.contentlistwrap {
+  width: 94%;
+  margin-top: 10px;
+  border-left: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: #ccc;
+
+  min-height: 100px;
+  border-bottom: 2px solid #fe2e00;
+}
+.ortacontent {
+  padding: 5px;
+}
+.ortacontent p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding: 5px;
+  background: rgb(65, 65, 65);
+  color: #ccc;
+  margin: 5px 0;
+}
+
+.kanbandikeylist {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  padding: 10px;
+  min-height: 500px;
+}
+
+.logintopkanban {
+  padding: 0 10px;
+  background: #ddd;
+}
+.loginsec {
+  margin-bottom: 55px;
+}
+.loginpageback {
+  overflow: hidden;
+  width: 50%;
+  margin-left: auto;
+  padding-top: 0px;
+  margin-right: auto;
+  font-family: "Raleway";
+}
+.loginpagewrapper {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: #ddd;
+  height: 100%;
+}
+.loginUp {
+  width: 100%;
+  background: #333;
+  color: #ddd;
+}
+
+.loginUp h4 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  font-size: 16px;
+}
+.logincontent {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 100%;
+  background: #ccc;
+  padding-top: 55px;
+}
+.loginLogo {
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.logincontent input {
+  display: block;
+  width: 75%;
+  height: 30px;
+  line-height: 30px;
+  border: 0px;
+  border-radius: 5px;
+  text-indent: 10px;
+  font-family: "Raleway";
+  margin: 15px auto;
+  border-bottom: 1px solid #fe2e00;
+  background: #fdfdfd;
+}
+.logincontent button {
+  width: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  background: #fe2e00;
+  border-radius: 5px;
+  border: 0;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Raleway";
+  color: #ddd;
+  transition: 1s;
+}
+.logincontent button:hover {
+  transition: 1s;
+  background: #cf2600;
+}

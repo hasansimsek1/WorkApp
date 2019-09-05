@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.PageTitle = "Kanban Board List";
+}
+
+<div class="kanbanwrapper">
+    <div class="kanbantop">
+        <aside class="leftbilgi">
+            <h4 class="listelebaslik">Kanban Boards</h4>
+        </aside>
+        <aside class="rightolustur">
+            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
+                New Kanban Board
+            </button>
+            <button id="iptalButton"
+                    onclick="(projeListele())"
+                    class="cancelbtn">
+                Cancel
+            </button>
+        </aside>
+    </div>
+    <div id="listeleBoard" class="kanbansecwrapper">
+        <div onclick="location.href='kanbandetay.html'" class="yataylist">
+            <aside class="listitem">
+                <p class="noticerikyazisi tarih">Projemin Adı</p>
+            </aside>
+            <aside class="listitem">
+                <p class="noticerikyazisi">Sütun Sayısı: <b>5</b></p>
+            </aside>
+            <aside class="listitem">
+                <p class="notkategoriyazisi">Biten Sayısı: <b>3</b></p>
+            </aside>
+            <aside class="listitem">
+                <p class="notkategoriyazisi">Aktif Sayısı: <b>2</b></p>
+            </aside>
+            <aside class="listitem">
+                <p class="notkategoriyazisi">Kalan Sayısı: <b>3</b></p>
+            </aside>
+        </div>
+    </div>
+    <div id="projeEkle" class="kanbansecwrapper">
+        <form class="projeEkle">
+            <aside class="inpikili">
+                <input type="text" placeholder="Board Name" />
+            </aside>
+            <button class="addbtn" type="submit">Add</button>
+        </form>
+    </div>
+</div>
+

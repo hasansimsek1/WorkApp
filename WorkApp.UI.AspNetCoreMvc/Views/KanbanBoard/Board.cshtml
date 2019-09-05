@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewData["Title"] = "Board";
+}
+
+<div class="kanbanwrapper">
+    <div class="kanbantop">
+        <aside class="leftbilgi">
+            <h4 class="listelebaslik">Boardlarım / <b>Proje Adı</b></h4>
+        </aside>
+        <aside class="rightolustur">
+            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
+                Yeni Board Ekle
+            </button>
+            <button id="iptalButton"
+                    onclick="(projeListele())"
+                    class="cancelbtn">
+                İptal
+            </button>
+        </aside>
+    </div>
+    <div id="listeleBoard" class="kanbansecwrapper kanbandikeylist">
+        <div class="dikeylist">
+            <aside class="ustlist">
+                <h3>Aktifler</h3>
+            </aside>
+            <div class="ortalistdikey contentlistwrap">
+                <aside class="ortacontent">
+                    <p>deneme aktifteyiz alo haberin var mı bu ilk yazı p denemesi p girildiyse</p>
+                    <p>hatta buradayız</p>
+                    <p>deneme aktifteyiz</p>
+                    <p>hatta buradayız</p>
+                    <p>deneme aktifteyiz</p>
+                    <p>hatta buradayız</p>
+                    <p>deneme aktifteyiz</p>
+                    <p>hatta buradayız</p>
+                </aside>
+            </div>
+        </div>
+        <div class="dikeylist">
+            <aside class="ustlist">
+                <h3>Bitenler</h3>
+            </aside>
+            <div class="ortalistdikey contentlistwrap">
+                <aside class="ortacontent">
+                    <p>deneme bitenlerdeyiz</p>
+                </aside>
+            </div>
+            <div class="ortalistdikey contentlistwrap">
+                <aside class="ortacontent">
+                    <p>deneme bitenlerdeyiz</p>
+                </aside>
+            </div>
+        </div>
+        <div class="dikeylist">
+            <aside class="ustlist">
+                <h3>Yapılacaklar</h3>
+            </aside>
+            <div class="ortalistdikey contentlistwrap">
+                <aside class="ortacontent">
+                    <p>deneme yapılacaklardayız.</p>
+                </aside>
+            </div>
+        </div>
+    </div>
+    <div id="projeEkle" class="kanbansecwrapper">
+        <form class="projeEkle">
+            <aside class="inpikili">
+                <input type="text" placeholder="Board Adı" />
+            </aside>
+            <button class="addbtn" type="submit">Boardı Ekle</button>
+        </form>
+    </div>
+</div>
+

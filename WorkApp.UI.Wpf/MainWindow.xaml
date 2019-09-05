@@ -3,10 +3,189 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WorkApp.UI.Wpf"
+        xmlns:MaterialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        MinHeight="500"
+        MinWidth="500" 
+        Height="{Binding SystemParameters.PrimaryScreenHeight}"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="Work App"
+        xmlns:View="clr-namespace:WorkApp.UI.Wpf.View"
+        SizeChanged="Window_SizeChanged" 
+        >
+
+    <!-- WindowChrome decreases the performance. Search for solutions. -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="{Binding ActualHeight, ElementName=Header}" />
+    </WindowChrome.WindowChrome>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+
+    <Border BorderBrush="DarkGreen" BorderThickness="2">
+        <Grid >
+            <MaterialDesign:DrawerHost IsLeftDrawerOpen="{Binding Path=IsChecked, ElementName=MenuToggleButton}" >
+                <MaterialDesign:DrawerHost.LeftDrawerContent >
+                    <DockPanel MinWidth="212" >
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                              WindowChrome.IsHitTestVisibleInChrome="True"
+                              DockPanel.Dock="Top"
+                              HorizontalAlignment="Right" 
+                              VerticalAlignment="Top"
+                              Margin="16"
+                              IsChecked="{Binding Path=IsChecked, ElementName=MenuToggleButton, Mode=TwoWay}" />
+                        <View:MainWindowDrawerUserControl DataContext="{Binding DrawerViewModel}" Margin="20 0 0 0"/>
+                    </DockPanel>
+                </MaterialDesign:DrawerHost.LeftDrawerContent>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Because of the MenuToggleButton, I did not take these codes to user control for now.. -->
+                    <DockPanel Grid.Row="0" LastChildFill="True" x:Name="Header">
+                        <StackPanel >
+                            <MaterialDesign:ColorZone MaterialDesign:ShadowAssist.ShadowDepth="Depth4" Mode="PrimaryDark" DockPanel.Dock="Top">
+                                <Grid Margin="0 20 0 0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                          WindowChrome.IsHitTestVisibleInChrome="True"
+                                          Margin="16"
+                                          IsChecked="False"
+                                          x:Name="MenuToggleButton"/>
+                                    <Grid Grid.Row="0" Grid.Column="1">
+                                        <StackPanel  VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <!--<materialDesign:PackIcon  VerticalAlignment="Center" HorizontalAlignment="Center" Kind="FacebookWorkplace" />-->
+                                            <Image Source="/images/facebook-workplace-logo-png.png" Width="30" Height="30" Margin="0 0 10 0"/>
+                                            <TextBlock FontSize="24" Text="WorkApp" VerticalAlignment="Center" HorizontalAlignment="Center"   Width="103"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <View:HeaderUserControl Grid.Row="0" Grid.Column="2" />
+                                </Grid>
+                            </MaterialDesign:ColorZone>
+                        </StackPanel>
+                    </DockPanel>
+
+
+                    <Grid x:Name="ContentGrid" Grid.Row="1" Margin="20 10 20 20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="ContentGridFirstRow" Height="*"/>
+                            <RowDefinition x:Name="ContentGridSecondRow" Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="ContentGridFirstColumn" Width="*" />
+                            <ColumnDefinition x:Name="ContentGridSecondColumn" Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <MaterialDesign:Card 
+                        x:Name="NonVisibleToDoCard" 
+                        Grid.Row="0" Grid.Column="0" 
+                        IsEnabled="False" 
+                        Visibility="Visible" 
+                        Background="LightGray" 
+                        Margin="10" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        MaterialDesign:ShadowAssist.ShadowDepth="Depth3" >
+                            <TextBlock 
+                            x:Name="NonVisibleToDoTextBlock" 
+                            Text="CONTENT IS HIDDEN" 
+                            Foreground="Gray"
+                            FontSize="36" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"/>
+                        </MaterialDesign:Card>
+                        <View:MainWindowToDoUserControl 
+                        x:Name="MainWindowToDoUserControl" 
+                        Margin="10" 
+                        Grid.Column="0" Grid.Row="0" 
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                        MaterialDesign:ShadowAssist.ShadowDepth="Depth3" 
+                        DataContext="{Binding ToDoViewModel}"/>
+
+
+                        <MaterialDesign:Card
+                        x:Name="NonVisibleNoteCard" 
+                        Grid.Row="0" 
+                        Grid.Column="1" 
+                        IsEnabled="False" 
+                        Visibility="Visible" 
+                        Background="LightGray" 
+                        Margin="10" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        MaterialDesign:ShadowAssist.ShadowDepth="Depth3" 
+                        >
+                            <TextBlock 
+                            x:Name="NonVisibleNoteTextBlock"
+                            Foreground="Gray"
+                            Text="NOTE BOX" 
+                            FontSize="36" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"/>
+                        </MaterialDesign:Card>
+
+                        <MaterialDesign:Card 
+                        x:Name="NonVisibleWebPage1" 
+                        Grid.Row="1" Grid.Column="0" 
+                        IsEnabled="False" 
+                        Visibility="Visible" 
+                        Background="LightGray" 
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        MaterialDesign:ShadowAssist.ShadowDepth="Depth3" >
+                            <TextBlock 
+                            x:Name="NonVisibleWebPage1Text" 
+                            Foreground="Gray"
+                            Text="MAIL BOX" 
+                            FontSize="36" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"/>
+                        </MaterialDesign:Card>
+
+                        <MaterialDesign:Card 
+                        x:Name="NonVisibleWebPage2" 
+                        Grid.Row="1" 
+                        Grid.Column="1" 
+                        IsEnabled="False" 
+                        Visibility="Visible" 
+                        Background="LightGray" 
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        MaterialDesign:ShadowAssist.ShadowDepth="Depth3" >
+                            <TextBlock 
+                            x:Name="NonVisibleWebPage2Text" 
+                            Foreground="Gray"
+                            Text="MESSAGE BOX" 
+                            FontSize="36" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center"/>
+                        </MaterialDesign:Card>
+
+                    </Grid>
+                </Grid>
+            </MaterialDesign:DrawerHost>
+        </Grid>
+    </Border>
 </Window>

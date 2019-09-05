@@ -1,0 +1,76 @@
+﻿@model LoginViewModel;
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+@*
+    <h1>Login</h1>
+
+    <form method="post">
+        <div asp-validation-summary="All"></div>
+        <div>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="RememberMe"></label>
+            <input asp-for="RememberMe" />
+            @Html.DisplayNameFor(m => m.RememberMe);
+        </div>
+        <button type="submit">Login</button>
+    </form>
+*@
+
+
+<div class="kanbanwrapper loginsec">
+    <div class="kanbantop logintopkanban">
+        <aside class="leftbilgi">
+            <h4 class="listelebaslik">
+                To start, register in seconds..
+            </h4>
+        </aside>
+        <aside class="rightolustur">
+            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
+                Register
+            </button>
+            <button id="iptalButton"
+                    onclick="(projeListele())"
+                    class="cancelbtn">
+                Cancel
+            </button>
+        </aside>
+    </div>
+    <div id="listeleBoard" class="kanbansecwrapper loginpageback">
+        <div class="loginpagewrapper">
+            <aside class="loginUp">
+                <h4>Sign In</h4>
+            </aside>
+            <img class="loginLogo" src="~/images/exampleLogo.png">
+            <aside class="logincontent">
+                <input type="text" placeholder="E-Mail" />
+                <input type="password" placeholder="Password" />
+                <button type="submit">Sign In</button>
+            </aside>
+        </div>
+    </div>
+    <div id="projeEkle" class="kanbansecwrapper loginpageback">
+        <div class="loginpagewrapper">
+            <aside class="loginUp">
+                <h4>Register</h4>
+            </aside>
+            <aside class="logincontent">
+                <input type="text" placeholder="E-Mail" />
+                <input type="password" placeholder="Password" />
+                <input type="password" placeholder="Confirm Password" />
+                <button class="addBtn" type="submit">Register</button>
+            </aside>
+        </div>
+    </div>
+</div>

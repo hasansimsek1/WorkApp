@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "Note / Index";
+}
+
+<div class="kanbanwrapper">
+    <div class="kanbantop">
+        <aside class="leftbilgi">
+            <h4 class="listelebaslik">Notes</h4>
+        </aside>
+        <aside class="rightolustur">
+            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
+                New Note
+            </button>
+            <button id="iptalButton"
+                    onclick="(projeListele())"
+                    class="cancelbtn">
+                Cancel
+            </button>
+        </aside>
+    </div>
+    <div id="listeleBoard" class="kanbansecwrapper">
+        <div class="yataylist">
+            <aside class="listitem">
+                <input class="inpcheck" type="checkbox" />
+                <span class="checkmark"></span>
+            </aside>
+            <aside class="listitem uzunitem">
+                <p class="noticerikyazisi tarih">not denemesi</p>
+            </aside>
+            <aside class="listitem ortaitem">
+                <p class="noticerikyazisi tarih">09.02.2018</p>
+            </aside>
+        </div>
+    </div>
+    <div id="projeEkle" class="kanbansecwrapper">
+        <div id="summernote"></div>
+        <script>
+              $("#summernote").summernote({
+                placeholder: "Enter your note here",
+                tabsize: 2,
+                height: 100
+              });
+        </script>
+        <form class="projeEkle">
+            <aside class="inpikili"></aside>
+            <button class="addbtn" type="submit">Add</button>
+        </form>
+    </div>
+</div>
+

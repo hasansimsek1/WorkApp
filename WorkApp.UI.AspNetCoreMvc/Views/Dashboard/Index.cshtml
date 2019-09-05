@@ -1,0 +1,65 @@
+﻿@model DashboardViewModel;
+
+@{
+    ViewBag.Title = "Dashboard / Index";
+}
+
+<div class="contentwrapperdash">
+    <div class="ikilidashboardcontent">
+        <div class="activekanbanwrap">
+            <aside class="activekanban">
+                <h4 class="baslikactive">Kanban Summary</h4>
+                <p class="activesayisi">
+                    Total Kanban Boards : <b>@Model.TotalKanbanBoardCount</b>
+                </p>
+            </aside>
+        </div>
+        <div class="activekanbanwrap">
+            <aside class="activekanban">
+                <h4 class="baslikactive">ToDoes Summary</h4>
+                <p class="activesayisi">
+                    Completed ToDoes : <b>@Model.CompletedToDoCount</b>
+                </p>
+                <p class="activesayisi">
+                    Incomplete ToDoes : <b>@Model.IncompleteToDoCount</b>
+                </p>
+                <p class="activesayisi">
+                    Today : <b>@Model.ToDoesOfToday.Count</b>
+                </p>
+            </aside>
+        </div>
+    </div>
+    <div class="uzunactivekanban">
+        <aside class="activekanban">
+            <h4 class="baslikactive">Notes Summary</h4>
+            <p class="activesayisi">
+                Total Notes : <b>@Model.TotalNoteCount</b>
+            </p>
+        </aside>
+        <div class="yataylistwrapper">
+            @if (Model.TotalNoteCount == 0)
+            {
+                <div class="yataylist">
+                    <aside class="sollist">
+                        <p class="tarih">There is no note yet.</p>
+                    </aside>
+                </div>
+            }
+            else
+            {
+                <div class="yataylist">
+                    <aside class="sollist">
+                        <p class="tarih">@Model.LastEditedNote.ModifiedDate</p>
+                    </aside>
+                    <aside class="ortalist">
+                        <p class="noticerikyazisi">@Model.LastEditedNote.Title</p>
+                    </aside>
+                    <aside class="saglist">
+                        <p class="notkategoriyazisi">@Model.LastEditedNote.Content</p>
+                    </aside>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

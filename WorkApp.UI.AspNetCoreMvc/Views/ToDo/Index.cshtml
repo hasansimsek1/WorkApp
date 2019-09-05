@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewData["Title"] = "ToDo / Index";
+}
+
+<div class="kanbanwrapper">
+    <div class="kanbantop">
+        <aside class="leftbilgi">
+            <h4 class="listelebaslik">ToDo List</h4>
+        </aside>
+        <aside class="rightolustur">
+            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
+                New ToDo
+            </button>
+            <button id="iptalButton"
+                    onclick="(projeListele())"
+                    class="cancelbtn">
+                Cancel
+            </button>
+        </aside>
+    </div>
+    <div id="listeleBoard" class="kanbansecwrapper">
+        <div class="yataylist">
+            <aside class="listitem">
+                <input class="inpcheck" type="checkbox" />
+                <span class="checkmark"></span>
+            </aside>
+            <aside class="listitem uzunitem">
+                <p class="noticerikyazisi tarih">Markete Git</p>
+            </aside>
+            <aside class="listitem ortaitem">
+                <p class="noticerikyazisi tarih">09.02.2018</p>
+            </aside>
+        </div>
+    </div>
+    <div id="projeEkle" class="kanbansecwrapper">
+        <form class="projeEkle">
+            <aside class="inpikili">
+                <input type="text" placeholder="What to do?" />
+            </aside>
+            <button class="addbtn" type="submit">Add</button>
+        </form>
+    </div>
+</div>
+
