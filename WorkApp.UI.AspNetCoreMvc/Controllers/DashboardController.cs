@@ -34,16 +34,16 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
              * 
              */
 
-            var totalKanbanBoardsCountResult = await _kanbanBoardService.GetTotalKanbanBoardCount();
+            var totalKanbanBoardsCountResult = await _kanbanBoardService.GetTotalKanbanBoardCountAsync();
             int totalKanbanBoardCount = totalKanbanBoardsCountResult.Data;
 
-            var lastEditedKanbanBoardResult = await _kanbanBoardService.GetLastEditedKanbanBoard();
+            var lastEditedKanbanBoardResult = await _kanbanBoardService.GetLastEditedKanbanBoardAsync();
             KanbanBoardDto lastEditedKanbanBoard = lastEditedKanbanBoardResult.Data;
 
-            var totalNoteCountResult = await _noteService.GetTotalNoteCount();
+            var totalNoteCountResult = await _noteService.GetTotalNoteCountAsync();
             int totalNoteCount = totalNoteCountResult.Data;
 
-            var lastEditedNoteResult = await _noteService.GetLastEditedNote();
+            var lastEditedNoteResult = await _noteService.GetLastEditedNoteAsync();
             NoteDto lastEditedNote = lastEditedNoteResult.Data;
 
             var completedToDoCountResult = await _toDoService.GetCompletedToDoCountAsync();
@@ -52,7 +52,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             var incompleteToDoCountResult = await _toDoService.GetIncompleteToDoCountAsync();
             int incompleteToDoCount = incompleteToDoCountResult.Data;
 
-            var toDoesOfTodayResult = await _toDoService.GetToDoesOfToday();
+            var toDoesOfTodayResult = await _toDoService.GetToDoesOfTodayAsync();
             List<ToDoDto> toDoesOfToday = toDoesOfTodayResult.Data.ToList();
 
             DashboardViewModel dashboardViewModel = new DashboardViewModel

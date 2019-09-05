@@ -45,8 +45,7 @@ namespace WorkApp.UI.AspNetCoreMvc
             {
                 options.Password.RequiredLength = 10;
             });
-
-
+            
             // this policy setting allows anonymous actions in controllers that use Authorize attribute
             AuthorizationPolicy authPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
             AuthorizeFilter authFilter = new AuthorizeFilter(authPolicy);

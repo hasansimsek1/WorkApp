@@ -1,7 +1,8 @@
-﻿@model LoginViewModel;
+﻿@model LoginRegisterViewModel;
+
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login Or Register";
 }
 
 @*
@@ -36,41 +37,22 @@
                 To start, register in seconds..
             </h4>
         </aside>
-        <aside class="rightolustur">
-            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
-                Register
-            </button>
-            <button id="iptalButton"
-                    onclick="(projeListele())"
-                    class="cancelbtn">
-                Cancel
-            </button>
-        </aside>
     </div>
     <div id="listeleBoard" class="kanbansecwrapper loginpageback">
         <div class="loginpagewrapper">
             <aside class="loginUp">
-                <h4>Sign In</h4>
+                <h4>Log In Or Register</h4>
             </aside>
             <img class="loginLogo" src="~/images/exampleLogo.png">
-            <aside class="logincontent">
-                <input type="text" placeholder="E-Mail" />
-                <input type="password" placeholder="Password" />
-                <button type="submit">Sign In</button>
-            </aside>
-        </div>
-    </div>
-    <div id="projeEkle" class="kanbansecwrapper loginpageback">
-        <div class="loginpagewrapper">
-            <aside class="loginUp">
-                <h4>Register</h4>
-            </aside>
-            <aside class="logincontent">
-                <input type="text" placeholder="E-Mail" />
-                <input type="password" placeholder="Password" />
-                <input type="password" placeholder="Confirm Password" />
-                <button class="addBtn" type="submit">Register</button>
-            </aside>
+            <form method="post" class="logincontent">
+                <div asp-validation-summary="All"></div>
+                <input asp-for="Email" type="text" placeholder="E-Mail" />
+                <input asp-for="Password" type="password" placeholder="Password" />
+
+                <button asp-action="Login" asp-controller="Account" type="submit">Sign In</button>
+                <button asp-action="Register" asp-controller="Account" class="addBtn" type="submit">Register</button>
+            </form>
         </div>
     </div>
 </div>
+

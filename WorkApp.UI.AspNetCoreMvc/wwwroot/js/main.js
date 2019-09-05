@@ -1,22 +1,22 @@
-$(document).ready(function() {
-  $("#projeEkle").hide();
-  $("#iptalButton").hide();
-});
-$(document).ready(function() {
+//$(document).ready(function() {
+//  $("#projeEkle").hide();
+//  $("#iptalButton").hide();
+//});
+//$(document).ready(function() {
 
-});
-function projeOlustur() {
-  $("#projeEkle").show();
-  $("#iptalButton").show();
+//});
+//function projeOlustur() {
+//  $("#projeEkle").show();
+//  $("#iptalButton").show();
 
-  $("#addButton").hide();
-  $("#listeleBoard").hide();
-}
+//  $("#addButton").hide();
+//  $("#listeleBoard").hide();
+//}
 
-function projeListele() {
-  $("#projeEkle").hide();
-  $("#iptalButton").hide();
+//function projeListele() {
+//  $("#projeEkle").hide();
+//  $("#iptalButton").hide();
 
-  $("#addButton").show();
-  $("#listeleBoard").show();
-}
+//  $("#addButton").show();
+//  $("#listeleBoard").show();
+//}

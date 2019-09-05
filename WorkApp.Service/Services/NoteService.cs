@@ -30,7 +30,7 @@ namespace WorkApp.Service.Services
             return new Result<IEnumerable<NoteDto>>() { Data = result.Data.Where(x => x.IsDeleted == false).Cast<NoteDto>() };
         }
 
-        public async Task<Result<NoteDto>> GetLastEditedNote()
+        public async Task<Result<NoteDto>> GetLastEditedNoteAsync()
         {
             var result = await _noteCrudService.GetAllAsync();
 
@@ -65,7 +65,7 @@ namespace WorkApp.Service.Services
             return new Result<NoteDto>() { Data = noteDto };
         }
 
-        public async Task<Result<int>> GetTotalNoteCount()
+        public async Task<Result<int>> GetTotalNoteCountAsync()
         {
             var result = await _noteCrudService.GetAllAsync();
 

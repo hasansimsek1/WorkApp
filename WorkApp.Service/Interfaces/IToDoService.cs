@@ -15,7 +15,7 @@ namespace WorkApp.Service.Interfaces
         Task<Result<int>> GetTotalToDoCountAsync();
         Task<Result<int>> GetCompletedToDoCountAsync();
         Task<Result<int>> GetIncompleteToDoCountAsync();
-        Task<Result<IEnumerable<ToDoDto>>> GetToDoesOfToday();
-        Task<Result<IEnumerable<ToDoDto>>> GetToDoesBetweenDates(DateTime beingDate, DateTime endDate);
+        Task<Result<IEnumerable<ToDoDto>>> GetToDoesOfTodayAsync();
+        Task<Result<IEnumerable<ToDoDto>>> GetToDoesBetweenDatesAsync(DateTime beingDate, DateTime endDate);
     }
 }

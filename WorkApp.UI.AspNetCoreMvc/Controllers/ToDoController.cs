@@ -7,7 +7,7 @@ using WorkApp.Service.Interfaces;
 
 namespace WorkApp.UI.AspNetCoreMvc.Controllers
 {
-    public class ToDoController : Controller
+    public class ToDoController : BaseController
     {
         private readonly IToDoService _toDoService;
 
@@ -22,8 +22,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
 
             if (toDoListResult.HasError)
             {
-                ViewBag.ErrorMessage = "An error has occured while getting 'To Do' records from database.";
-                return View();
+                return RedirectToError();
             }
             else
             {

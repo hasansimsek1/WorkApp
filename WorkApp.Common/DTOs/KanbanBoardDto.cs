@@ -9,6 +9,9 @@ namespace WorkApp.Common.DTOs
     {
         public string Name { get; set; }
 
-        public List<KanbanBoardColumn> Columns { get; set; }
+        public virtual ICollection<KanbanBoardColumn> Columns { get; set; }
+
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

@@ -15,33 +15,27 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
-        
+                
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
+        
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
+        public async Task<IActionResult> Register(LoginRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 ApplicationUser newUser = new ApplicationUser
                 {
-                    Email = registerViewModel.Email,
-                    UserName = registerViewModel.Email
+                    Email = model.Email,
+                    UserName = model.Email
                 };
 
-                var result = await _userManager.CreateAsync(newUser, registerViewModel.Password);
+                var result = await _userManager.CreateAsync(newUser, model.Password);
 
                 if (result.Succeeded)
                 {
@@ -55,7 +49,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
                 }
             }
 
-            return View(registerViewModel);
+            return View("Login", model);
         }
 
         [HttpGet]
@@ -67,11 +61,11 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel, string returnUrl)
+        public async Task<IActionResult> Login(LoginRegisterViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.RememberMe, true);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, true);
 
                 if (result.Succeeded)
                 {
@@ -86,7 +80,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
                 ModelState.AddModelError("", "Invalid username or password!");
             }
 
-            return View(loginViewModel);
+            return View(model);
         }
 
         [HttpPost]
@@ -95,14 +89,28 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
         }
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
+
+        /// <summary>
+        /// Example code for remote validation. Asp.net core uses JQuery for remote validation in the client-side.
+        /// We should put [Remote(action:"IsEmailFree", controller:"Account")] attribute to the property in the related viewmodel.
+        /// </summary>
+        /// <param name="email">Email address to be checked</param>
+        /// <returns>JSon</returns>
         [AcceptVerbs("Get", "Post")]
         [AllowAnonymous]
         public async Task<IActionResult> IsEmailFree(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 
-            if(user == null)
+            if (user == null)
             {
                 return Json(true);
             }
@@ -110,13 +118,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             {
                 return Json($"Email {email} already taken!");
             }
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult AccessDenied()
-        {
-            return View();
         }
     }
 }

@@ -7,7 +7,7 @@ using WorkApp.Service.Interfaces;
 
 namespace WorkApp.UI.AspNetCoreMvc.Controllers
 {
-    public class NoteController : Controller
+    public class NoteController : BaseController
     {
         private INoteService _noteService;
 
@@ -22,9 +22,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
 
             if(result.HasError)
             {
-                ViewBag.HasError = true;
-                ViewBag.Error = "An error has occured while getting records from database.";
-                return View();
+                return RedirectToError();
             }
             else
             {

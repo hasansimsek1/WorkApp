@@ -360,12 +360,13 @@ footer {
   margin-bottom: 55px;
 }
 .loginpageback {
-  overflow: hidden;
-  width: 50%;
-  margin-left: auto;
-  padding-top: 0px;
-  margin-right: auto;
-  font-family: "Raleway";
+    overflow: hidden;
+    width: 50%;
+    margin-left: auto;
+    padding-top: 0px;
+    margin-right: auto;
+    font-family: "Raleway";
+    height: 100%;
 }
 .loginpagewrapper {
   width: 100%;

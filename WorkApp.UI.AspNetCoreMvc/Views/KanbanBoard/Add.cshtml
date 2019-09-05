@@ -1,0 +1,17 @@
+﻿@model KanbanBoardDto;
+
+@{
+    ViewData["Title"] = "Add New Kanban";
+}
+
+
+
+<div id="projeEkle" class="kanbansecwrapper">
+    <form method="post" class="projeEkle">
+        <div asp-validation-summary="All" />
+        <aside class="inpikili">
+            <input asp-for="Name" type="text" placeholder="Board Name" />
+        </aside>
+        <button asp-action="Add" asp-controller="KanbanBoard" class="addbtn" type="submit">Add</button>
+    </form>
+</div>

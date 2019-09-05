@@ -6,7 +6,7 @@ namespace WorkApp.Common.Interfaces
     {
         int Id { get; set; }
         DateTime AddedDate { get; set; }
-        DateTime? ModifiedDate { get; set; }
+        DateTime ModifiedDate { get; set; }
         bool IsDeleted { get; set; }
     }
 }

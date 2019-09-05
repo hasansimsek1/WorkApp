@@ -93,7 +93,7 @@ namespace WorkApp.Service.Services
             return new Result<IEnumerable<ToDoDto>>() { Data = result.Data.Where(x => x.IsDeleted == false).ToList().Cast<ToDoDto>() };
         }
 
-        public async Task<Result<IEnumerable<ToDoDto>>> GetToDoesBetweenDates(DateTime beingDate, DateTime endDate)
+        public async Task<Result<IEnumerable<ToDoDto>>> GetToDoesBetweenDatesAsync(DateTime beingDate, DateTime endDate)
         {
             var result = await _toDoService.GetAllAsync();
 
@@ -109,7 +109,7 @@ namespace WorkApp.Service.Services
             return new Result<IEnumerable<ToDoDto>>() { Data = result.Data.Where(x => x.AddedDate < endDate && x.AddedDate > beingDate && x.IsDeleted == false).ToList().Cast<ToDoDto>() };
         }
 
-        public async Task<Result<IEnumerable<ToDoDto>>> GetToDoesOfToday()
+        public async Task<Result<IEnumerable<ToDoDto>>> GetToDoesOfTodayAsync()
         {
             var result = await _toDoService.GetAllAsync();
 

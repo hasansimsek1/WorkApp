@@ -26,7 +26,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         }
 
         [Route("Error")]
-        [AllowAnonymous]
         public IActionResult UnhandledError()
         {
             return View("Error");
