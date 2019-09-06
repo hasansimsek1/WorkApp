@@ -18,7 +18,7 @@ namespace WorkApp.Service.Services
             _noteCrudService = noteCrudService;
         }
 
-        public async Task<Result<IEnumerable<NoteDto>>> GetAllAsync()
+        public async Task<Result<IEnumerable<NoteDto>>> GetAllAsync(string userId)
         {
             var result = await _noteCrudService.GetAllAsync();
 
@@ -27,23 +27,39 @@ namespace WorkApp.Service.Services
                 return new Result<IEnumerable<NoteDto>>() { Data = null, Errors = result.Errors };
             }
 
-            return new Result<IEnumerable<NoteDto>>() { Data = result.Data.Where(x => x.IsDeleted == false).Cast<NoteDto>() };
+            if(result.Data != null)
+            {
+                var noteDtoList = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).Select(x => new NoteDto
+                {
+                    AddedDate = x.AddedDate,
+                    IsDeleted = x.IsDeleted,
+                    Content = x.Content,
+                    Id = x.Id,
+                    ModifiedDate = x.ModifiedDate,
+                    Tags = x.Tags,
+                    Title = x.Title,
+                    User = x.User,
+                    UserId = x.UserId
+                });
+
+                return new Result<IEnumerable<NoteDto>> { Data = noteDtoList };
+            }
+            else
+            {
+                return new Result<IEnumerable<NoteDto>> { Data = null };
+            }
         }
 
-        public async Task<Result<NoteDto>> GetLastEditedNoteAsync()
+        public async Task<Result<NoteDto>> GetLastEditedNoteAsync(string userId)
         {
             var result = await _noteCrudService.GetAllAsync();
 
             if (result.HasError)
             {
-                return new Result<NoteDto>()
-                {
-                    Data = null,
-                    Errors = result.Errors
-                };
+                return new Result<NoteDto>() { Data = null, Errors = result.Errors };
             }
 
-            var note = result.Data.Where(x => x.IsDeleted == false).OrderByDescending(x => x.ModifiedDate).FirstOrDefault();
+            var note = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).OrderByDescending(x => x.ModifiedDate).FirstOrDefault();
 
             NoteDto noteDto = new NoteDto();
 
@@ -57,28 +73,25 @@ namespace WorkApp.Service.Services
                     AddedDate = note.AddedDate,
                     ModifiedDate = note.ModifiedDate,
                     IsDeleted = note.IsDeleted,
-                    Tags = note.Tags.ToList()
+                    Tags = note.Tags.ToList(),
+                    User = note.User,
+                    UserId = note.UserId
                 };
             }
-
-
+            
             return new Result<NoteDto>() { Data = noteDto };
         }
 
-        public async Task<Result<int>> GetTotalNoteCountAsync()
+        public async Task<Result<int>> GetTotalNoteCountAsync(string userId)
         {
             var result = await _noteCrudService.GetAllAsync();
 
             if (result.HasError)
             {
-                return new Result<int>()
-                {
-                    Data = 0,
-                    Errors = result.Errors
-                };
+                return new Result<int>() { Data = 0, Errors = result.Errors };
             }
 
-            return new Result<int>() { Data = result.Data.Where(x => x.IsDeleted == false).ToList().Count };
+            return new Result<int>() { Data = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).ToList().Count };
         }
     }
 }

@@ -9,8 +9,8 @@ namespace WorkApp.Service.Interfaces
 {
     public interface INoteService : IService
     {
-        Task<Result<int>> GetTotalNoteCountAsync();
-        Task<Result<NoteDto>> GetLastEditedNoteAsync();
-        Task<Result<IEnumerable<NoteDto>>> GetAllAsync();
+        Task<Result<int>> GetTotalNoteCountAsync(string userId);
+        Task<Result<NoteDto>> GetLastEditedNoteAsync(string userId);
+        Task<Result<IEnumerable<NoteDto>>> GetAllAsync(string userId);
     }
 }

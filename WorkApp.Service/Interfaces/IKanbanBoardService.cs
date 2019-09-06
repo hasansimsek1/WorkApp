@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
-using WorkApp.Common.Entities;
 
 namespace WorkApp.Service.Interfaces
 {
     public interface IKanbanBoardService : IService
     {
-        Task<Result<int>> GetTotalKanbanBoardCountAsync();
-        Task<Result<KanbanBoardDto>> GetLastEditedKanbanBoardAsync();
-        Task<Result<IEnumerable<KanbanBoardDto>>> GetAllAsync();
+        Task<Result<int>> GetTotalKanbanBoardCountAsync(string userId);
+        Task<Result<KanbanBoardDto>> GetLastEditedKanbanBoardAsync(string userId);
+        Task<Result<IEnumerable<KanbanBoardDto>>> GetAllAsync(string userId);
         Task<Result<KanbanBoardDto>> AddAsync(KanbanBoardDto newKanban);
         Task<Result<KanbanBoardDto>> GetByIdAsync(int Id);
     }

@@ -33,7 +33,7 @@ namespace WorkApp.UI.AspNetCoreMvc
              *      organize the codes in this method for readability.
              *      services can be gathered from lower layers. but it's ok for now.
              */
-
+             
 
             services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(_config.GetConnectionString("default")));
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
 using WorkApp.Common.Interfaces;
@@ -13,9 +12,7 @@ namespace WorkApp.Service.Services
     public class CrudService<T> : ICrudService<T> where T : class, IEntity
     {
         private readonly ICrudRepository<T> _repository;
-
-
-
+        
         public CrudService(ICrudRepository<T> repository)
         {
             _repository = repository;
@@ -30,9 +27,7 @@ namespace WorkApp.Service.Services
         {
             return await _repository.GetAsync(Id);
         }
-
-
-
+        
         public async Task<Result<T>> InsertAsync(T entity)
         {
             return await _repository.InsertAsync(entity);

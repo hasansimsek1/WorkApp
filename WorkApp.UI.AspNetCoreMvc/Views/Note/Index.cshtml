@@ -1,4 +1,4 @@
-﻿@model NoteDto;
+﻿@model IEnumerable<NoteDto>;
 
 @{
     ViewData["Title"] = "Note / Index";
@@ -10,43 +10,42 @@
             <h4 class="listelebaslik">Notes</h4>
         </aside>
         <aside class="rightolustur">
-            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
+            <a asp-action="Add" asp-controller="Note" class="addbtn">
                 New Note
-            </button>
-            <button id="iptalButton"
-                    onclick="(projeListele())"
-                    class="cancelbtn">
-                Cancel
-            </button>
+            </a>
         </aside>
     </div>
     <div id="listeleBoard" class="kanbansecwrapper">
-        <div class="yataylist">
-            <aside class="listitem">
-                <input class="inpcheck" type="checkbox" />
-                <span class="checkmark"></span>
-            </aside>
-            <aside class="listitem uzunitem">
-                <p class="noticerikyazisi tarih">not denemesi</p>
-            </aside>
-            <aside class="listitem ortaitem">
-                <p class="noticerikyazisi tarih">09.02.2018</p>
-            </aside>
-        </div>
+
+        @if (Model.Any())
+        {
+            @foreach (var note in Model)
+            {
+                <div class="yataylist">
+                    <aside class="listitem">
+                        <input  class="inpcheck" type="checkbox" />
+                        <span class="checkmark"></span>
+                    </aside>
+                    <aside class="listitem uzunitem">
+                        <p class="noticerikyazisi tarih">@note.Title</p>
+                    </aside>
+                    <aside class="listitem ortaitem">
+                        <p class="noticerikyazisi tarih">@note.Content</p>
+                    </aside>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="yataylist">
+                <aside class="listitem uzunitem">
+                    <p class="noticerikyazisi tarih">There is no note yet..</p>
+                </aside>
+            </div>
+        }
+
+
     </div>
-    <div id="projeEkle" class="kanbansecwrapper">
-        <div id="summernote"></div>
-        <script>
-              $("#summernote").summernote({
-                placeholder: "Enter your note here",
-                tabsize: 2,
-                height: 100
-              });
-        </script>
-        <form class="projeEkle">
-            <aside class="inpikili"></aside>
-            <button class="addbtn" type="submit">Add</button>
-        </form>
-    </div>
+
 </div>
 

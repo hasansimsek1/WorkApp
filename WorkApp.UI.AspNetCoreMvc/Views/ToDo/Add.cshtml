@@ -1,0 +1,15 @@
+﻿@model ToDoDto;
+
+@{
+    ViewData["Title"] = "Add ToDo";
+}
+
+
+<div class="kanbansecwrapper">
+    <form method="post" >
+        <aside>
+            <input asp-for="Text" type="text" placeholder="What to do?" />
+        </aside>
+        <button asp-action="Add" asp-controller="ToDo" class="addbtn" type="submit">Add</button>
+    </form>
+</div>

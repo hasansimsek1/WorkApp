@@ -1,0 +1,21 @@
+﻿@model NoteDto;
+
+@{
+    ViewData["Title"] = "Add Note";
+}
+
+<div class="kanbansecwrapper">
+    <form method="post">
+        <div id="summernote"></div>
+        <aside></aside>
+        <button disabled class="addbtn" type="submit">Add</button>
+    </form>
+</div>
+
+<script>
+    $("#summernote").summernote({
+        placeholder: "Enter your note here",
+        tabsize: 2,
+        height: 100
+    });
+</script>

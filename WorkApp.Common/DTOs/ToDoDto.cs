@@ -15,7 +15,7 @@ namespace WorkApp.Common.DTOs
         public bool IsCompleted { get; set; }
 
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

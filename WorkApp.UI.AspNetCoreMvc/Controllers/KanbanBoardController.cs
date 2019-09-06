@@ -13,15 +13,17 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     public class KanbanBoardController : BaseController
     {
         private readonly IKanbanBoardService _kanbanService;
+        private readonly string _userId;
 
         public KanbanBoardController(IKanbanBoardService kanbanService)
         {
             _kanbanService = kanbanService;
+            _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public async Task<IActionResult> Index()
         {
-            var result = await _kanbanService.GetAllAsync();
+            var result = await _kanbanService.GetAllAsync(_userId);
 
             if (result.HasError)
             {
@@ -42,7 +44,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         {
             if(ModelState.IsValid)
             {
-                model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                model.UserId = _userId;
 
                 var result = await _kanbanService.AddAsync(model);
 

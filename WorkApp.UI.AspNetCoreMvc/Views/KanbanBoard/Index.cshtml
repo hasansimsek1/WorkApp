@@ -6,23 +6,23 @@
 
 <div class="kanbanwrapper">
     <div class="kanbantop">
-        <aside class="leftbilgi">
-            <h4 class="listelebaslik">Kanban Boards</h4>
+        <aside>
+            <h4 class="titlelist">Kanban Boards</h4>
         </aside>
-        <aside class="rightolustur">
+        <aside>
             <a asp-action="Add" asp-controller="KanbanBoard" class="addbtn">
                 New Kanban Board
             </a>
         </aside>
     </div>
-    <div id="listeleBoard" class="kanbansecwrapper">
+    <div class="kanbansecwrapper">
         @if (Model.Any())
         {
             @foreach (var item in Model)
             {
-                <a asp-action="Board" asp-controller="KanbanBoard" asp-route-id="@item.Id" class="yataylist">
+                <a asp-action="Board" asp-controller="KanbanBoard" asp-route-id="@item.Id" class="horizontallist">
                     <aside class="listitem">
-                        <p class="noticerikyazisi tarih">@item.Name</p>
+                        <p class="notecontenttext date">@item.Name</p>
                     </aside>
                     @*<aside class="listitem">
                         <p class="noticerikyazisi">Number of Columns : <b>@item.NumberOfColumns</b></p>
@@ -41,9 +41,9 @@
         }
         else
         {
-            <a href="#" class="yataylist">
+            <a href="#" class="horizontallist">
                 <aside class="listitem">
-                    <p class="noticerikyazisi tarih">There is no kanban board yet..</p>
+                    <p class="notecontenttext date">There is no kanban board yet..</p>
                 </aside>
             </a>
         }

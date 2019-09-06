@@ -6,70 +6,62 @@
 
 <div class="kanbanwrapper">
     <div class="kanbantop">
-        <aside class="leftbilgi">
-            <h4 class="listelebaslik">Boardlarım / <b>Proje Adı</b></h4>
+        <aside>
+            <h4 class="titlelist">Boardlarım / <b>Proje Adı</b></h4>
         </aside>
-        <aside class="rightolustur">
-            <button id="addButton" onclick="(projeOlustur())" class="addbtn">
-                Yeni Board Ekle
+        <aside>
+            <button id="addButton" class="addbtn">
+                New Board
             </button>
-            <button id="iptalButton"
-                    onclick="(projeListele())"
+            <button
                     class="cancelbtn">
-                İptal
+                Cancel
             </button>
         </aside>
     </div>
-    <div id="listeleBoard" class="kanbansecwrapper kanbandikeylist">
-        <div class="dikeylist">
-            <aside class="ustlist">
-                <h3>Aktifler</h3>
+    <div class="kanbansecwrapper kanbanverticallist">
+        <div class="verticallist">
+            <aside class="toplist">
+                <h3>Actives</h3>
             </aside>
-            <div class="ortalistdikey contentlistwrap">
-                <aside class="ortacontent">
-                    <p>deneme aktifteyiz alo haberin var mı bu ilk yazı p denemesi p girildiyse</p>
-                    <p>hatta buradayız</p>
-                    <p>deneme aktifteyiz</p>
-                    <p>hatta buradayız</p>
-                    <p>deneme aktifteyiz</p>
-                    <p>hatta buradayız</p>
-                    <p>deneme aktifteyiz</p>
-                    <p>hatta buradayız</p>
+            <div class="middlelistvertical contentlistwrap">
+                <aside class="middlecontent">
+                    <p>example</p>
                 </aside>
             </div>
         </div>
-        <div class="dikeylist">
-            <aside class="ustlist">
-                <h3>Bitenler</h3>
+        <div class="verticallist">
+            <aside class="toplist">
+                <h3>Finisheds</h3>
             </aside>
-            <div class="ortalistdikey contentlistwrap">
-                <aside class="ortacontent">
-                    <p>deneme bitenlerdeyiz</p>
+            <div class="middlelistvertical contentlistwrap">
+                <aside class="middlecontent">
+                    <p>example finished</p>
                 </aside>
             </div>
-            <div class="ortalistdikey contentlistwrap">
-                <aside class="ortacontent">
-                    <p>deneme bitenlerdeyiz</p>
+            <div class="middlelistvertical contentlistwrap">
+                <aside class="middlecontent">
+                    <p>example</p>
                 </aside>
             </div>
         </div>
-        <div class="dikeylist">
-            <aside class="ustlist">
-                <h3>Yapılacaklar</h3>
+        <div class="verticallist">
+            <aside class="toplist">
+                <h3>To Do List</h3>
             </aside>
-            <div class="ortalistdikey contentlistwrap">
-                <aside class="ortacontent">
-                    <p>deneme yapılacaklardayız.</p>
+            <div class="middlelistvertical contentlistwrap">
+                <aside class="middlecontent">
+                    <p>example to do list.</p>
                 </aside>
             </div>
         </div>
     </div>
-    <div id="projeEkle" class="kanbansecwrapper">
-        <form class="projeEkle">
-            <aside class="inpikili">
-                <input type="text" placeholder="Board Adı" />
+    <div class="kanbansecwrapper">
+        <form>
+            <aside >
+                <input type="text" placeholder="Board Name" />
             </aside>
-            <button class="addbtn" type="submit">Boardı Ekle</button>
+            <button class="addbtn" type="submit">Save Board</button>
         </form>
     </div>
 </div>

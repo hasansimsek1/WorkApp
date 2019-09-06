@@ -41,7 +41,7 @@ namespace WorkApp.Service.Services
             return new Result<KanbanBoardDto> { Data = newKanbanDto };
         }
 
-        public async Task<Result<IEnumerable<KanbanBoardDto>>> GetAllAsync()
+        public async Task<Result<IEnumerable<KanbanBoardDto>>> GetAllAsync(string userId)
         {
             var result = await _kanbanCrudService.GetAllAsync();
 
@@ -50,7 +50,26 @@ namespace WorkApp.Service.Services
                 return new Result<IEnumerable<KanbanBoardDto>> { Data = null, Errors = result.Errors };
             }
 
-            return new Result<IEnumerable<KanbanBoardDto>> { Data = result.Data.Where(x => x.IsDeleted == false).Cast<KanbanBoardDto>() };
+            if (result.Data != null)
+            {
+                var kanbanDtoList = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).Select(x => new KanbanBoardDto
+                {
+                    AddedDate = x.AddedDate,
+                    Columns = x.Columns,
+                    Id = x.Id,
+                    IsDeleted = x.IsDeleted,
+                    ModifiedDate = x.ModifiedDate,
+                    Name = x.Name,
+                    User = x.User,
+                    UserId = userId
+                });
+
+                return new Result<IEnumerable<KanbanBoardDto>> { Data = kanbanDtoList };
+            }
+            else
+            {
+                return new Result<IEnumerable<KanbanBoardDto>> { Data = null };
+            }
         }
 
         public async Task<Result<KanbanBoardDto>> GetByIdAsync(int Id)
@@ -61,10 +80,12 @@ namespace WorkApp.Service.Services
             {
                 return new Result<KanbanBoardDto> { Data = null, Errors = result.Errors };
             }
-            
-            return new Result<KanbanBoardDto>
+
+            KanbanBoardDto kanbanBoardDto = new KanbanBoardDto();
+
+            if(result.Data != null)
             {
-                Data = new KanbanBoardDto
+                kanbanBoardDto = new KanbanBoardDto
                 {
                     AddedDate = result.Data.AddedDate,
                     Columns = result.Data.Columns,
@@ -72,11 +93,12 @@ namespace WorkApp.Service.Services
                     ModifiedDate = result.Data.ModifiedDate,
                     Name = result.Data.Name,
                     UserId = result.Data.UserId
-                }
-            };
+                };
+            }
+            return new Result<KanbanBoardDto> { Data = kanbanBoardDto };
         }
 
-        public async Task<Result<KanbanBoardDto>> GetLastEditedKanbanBoardAsync()
+        public async Task<Result<KanbanBoardDto>> GetLastEditedKanbanBoardAsync(string userId)
         {
             var result = await _kanbanCrudService.GetAllAsync();
 
@@ -89,7 +111,7 @@ namespace WorkApp.Service.Services
                 };
             }
 
-            var kanbanBoard = result.Data.Where(x => x.IsDeleted == false).OrderByDescending(x => x.ModifiedDate).FirstOrDefault();
+            var kanbanBoard = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).OrderByDescending(x => x.ModifiedDate).FirstOrDefault();
 
             KanbanBoardDto kanbanBoardDto = new KanbanBoardDto();
             
@@ -100,7 +122,11 @@ namespace WorkApp.Service.Services
                     Id = kanbanBoard.Id,
                     Name = kanbanBoard.Name,
                     AddedDate = kanbanBoard.AddedDate,
-                    ModifiedDate = kanbanBoard.ModifiedDate
+                    ModifiedDate = kanbanBoard.ModifiedDate,
+                    Columns = kanbanBoard.Columns,
+                    IsDeleted = kanbanBoard.IsDeleted,
+                    User = kanbanBoard.User,
+                    UserId = kanbanBoard.UserId
                 };
             }
             
@@ -108,20 +134,16 @@ namespace WorkApp.Service.Services
             return new Result<KanbanBoardDto>() { Data = kanbanBoardDto };
         }
 
-        public async Task<Result<int>> GetTotalKanbanBoardCountAsync()
+        public async Task<Result<int>> GetTotalKanbanBoardCountAsync(string userId)
         {
             var result = await _kanbanCrudService.GetAllAsync();
 
             if (result.HasError)
             {
-                return new Result<int>()
-                {
-                    Data = 0,
-                    Errors = result.Errors
-                };
+                return new Result<int>() { Data = 0, Errors = result.Errors };
             }
 
-            return new Result<int>() { Data = result.Data.Where(x => x.IsDeleted == false).ToList().Count };
+            return new Result<int>() { Data = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).ToList().Count };
         }
     }
 }

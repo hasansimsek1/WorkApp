@@ -5,25 +5,25 @@
 }
 
 <div class="contentwrapperdash">
-    <div class="ikilidashboardcontent">
+    <div class="dashboardcontents">
         <div class="activekanbanwrap">
             <aside class="activekanban">
-                <h4 class="baslikactive">Kanban Summary</h4>
-                <p class="activesayisi">
+                <h4 class="activetitle">Kanban Summary</h4>
+                <p class="activenumber">
                     Total Kanban Boards : <b>@Model.TotalKanbanBoardCount</b>
                 </p>
             </aside>
         </div>
         <div class="activekanbanwrap">
             <aside class="activekanban">
-                <h4 class="baslikactive">ToDoes Summary</h4>
-                <p class="activesayisi">
+                <h4 class="activetitle">ToDoes Summary</h4>
+                <p class="activenumber">
                     Completed ToDoes : <b>@Model.CompletedToDoCount</b>
                 </p>
-                <p class="activesayisi">
+                <p class="activenumber">
                     Incomplete ToDoes : <b>@Model.IncompleteToDoCount</b>
                 </p>
-                <p class="activesayisi">
+                <p class="activenumber">
                     Today : <b>@Model.ToDoesOfToday.Count</b>
                 </p>
             </aside>
@@ -31,31 +31,31 @@
     </div>
     <div class="uzunactivekanban">
         <aside class="activekanban">
-            <h4 class="baslikactive">Notes Summary</h4>
-            <p class="activesayisi">
+            <h4 class="activetitle">Notes Summary</h4>
+            <p class="activenumber">
                 Total Notes : <b>@Model.TotalNoteCount</b>
             </p>
         </aside>
-        <div class="yataylistwrapper">
+        <div class="horizontallistwrapper">
             @if (Model.TotalNoteCount == 0)
             {
-                <div class="yataylist">
-                    <aside class="sollist">
-                        <p class="tarih">There is no note yet.</p>
+                <div class="horizontallist">
+                    <aside class="leftlist">
+                        <p class="date">There is no note yet.</p>
                     </aside>
                 </div>
             }
             else
             {
-                <div class="yataylist">
-                    <aside class="sollist">
-                        <p class="tarih">@Model.LastEditedNote.ModifiedDate</p>
+                <div class="horizontallist">
+                    <aside class="leftlist">
+                        <p class="date">@Model.LastEditedNote.ModifiedDate</p>
                     </aside>
-                    <aside class="ortalist">
-                        <p class="noticerikyazisi">@Model.LastEditedNote.Title</p>
+                    <aside class="middlelist">
+                        <p class="notecontenttext">@Model.LastEditedNote.Title</p>
                     </aside>
-                    <aside class="saglist">
-                        <p class="notkategoriyazisi">@Model.LastEditedNote.Content</p>
+                    <aside class="rightlist">
+                        <p class="notecontenttext">@Model.LastEditedNote.Content</p>
                     </aside>
                 </div>
             }

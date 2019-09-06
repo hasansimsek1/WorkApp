@@ -6,10 +6,10 @@
 
 
 
-<div id="projeEkle" class="kanbansecwrapper">
-    <form method="post" class="projeEkle">
+<div class="kanbansecwrapper">
+    <form method="post">
         <div asp-validation-summary="All" />
-        <aside class="inpikili">
+        <aside>
             <input asp-for="Name" type="text" placeholder="Board Name" />
         </aside>
         <button asp-action="Add" asp-controller="KanbanBoard" class="addbtn" type="submit">Add</button>
