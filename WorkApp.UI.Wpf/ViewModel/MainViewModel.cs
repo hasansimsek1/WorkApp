@@ -2,13 +2,14 @@
 using WorkApp.UI.Wpf.Interfaces;
 
 
-/// <summary>
-/// 
-/// </summary>
 namespace WorkApp.UI.Wpf.ViewModel
 {
     /// <summary>
-    /// 
+    /// Viewmodel that is bound to the MainWindow.
+    /// Responsible for initializing sub-viewmodels for the MainWindow. 
+    /// Used sub-viewmodels are : <para/>
+    /// DrawerViewModel, 
+    /// ToDoViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
@@ -17,18 +18,16 @@ namespace WorkApp.UI.Wpf.ViewModel
         public IToDoViewModel ToDoViewModel { get; }
 
         /// <summary>
-        /// Initializes services and sub-viewmodels.
+        /// Dependency injection mechanism injects the dependencies of this view-model via this constructor.
         /// </summary>
-        public MainViewModel(
-            IDrawerViewModel  drawerViewModel,
-            IToDoViewModel    toDoViewModel)
+        public MainViewModel(IDrawerViewModel drawerViewModel, IToDoViewModel toDoViewModel)
         {
             DrawerViewModel = drawerViewModel;
             ToDoViewModel = toDoViewModel;
         }
 
         /// <summary>
-        /// 
+        /// This method loads the relevant methods of the sub-viewmodels. These are DrawerViewModel.LoadAsync(), ToDoViewModel.LoadAsync()
         /// </summary>
         public async Task LoadAsync()
         {

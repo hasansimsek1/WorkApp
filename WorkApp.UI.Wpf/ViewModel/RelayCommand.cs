@@ -3,16 +3,15 @@ using System.Windows.Input;
 
 namespace WorkApp.UI.Wpf.ViewModel
 {
+    /// <summary>
+    /// Generic implementation of ICommand interface to fire the specified method when changes occur in the bound models on the UI.
+    /// </summary>
+    /// <typeparam name="T">Bound element to UI</typeparam>
     public class RelayCommand<T> : ICommand
     {
-        #region Fields
-
         readonly Action<T> _execute = null;
         readonly Predicate<T> _canExecute = null;
-
-        #endregion
-
-        #region Constructors
+        
 
         /// <summary>
         /// Initializes a new instance of <see cref="DelegateCommand{T}"/>.
@@ -38,9 +37,6 @@ namespace WorkApp.UI.Wpf.ViewModel
             _canExecute = canExecute;
         }
 
-        #endregion
-
-        #region ICommand Members
 
         ///<summary>
         ///Defines the method that determines whether the command can execute in its current state.
@@ -72,6 +68,5 @@ namespace WorkApp.UI.Wpf.ViewModel
             _execute((T)parameter);
         }
 
-        #endregion
     }
 }

@@ -49,13 +49,30 @@ namespace WorkApp.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DesktopMenu",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AddedDate = table.Column<DateTime>(nullable: false),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    IsVisible = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DesktopMenu", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tag",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
@@ -177,7 +194,7 @@ namespace WorkApp.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: true)
@@ -200,7 +217,7 @@ namespace WorkApp.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
@@ -224,7 +241,7 @@ namespace WorkApp.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Text = table.Column<string>(nullable: true),
                     IsCompleted = table.Column<bool>(nullable: false),
@@ -248,7 +265,7 @@ namespace WorkApp.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Priority = table.Column<int>(nullable: false),
@@ -273,7 +290,7 @@ namespace WorkApp.DataAccess.Migrations
                     TagId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -300,7 +317,7 @@ namespace WorkApp.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
@@ -326,7 +343,7 @@ namespace WorkApp.DataAccess.Migrations
                     TagId = table.Column<int>(nullable: false),
                     Id = table.Column<int>(nullable: false),
                     AddedDate = table.Column<DateTime>(nullable: false),
-                    ModifiedDate = table.Column<DateTime>(nullable: true),
+                    ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -344,6 +361,18 @@ namespace WorkApp.DataAccess.Migrations
                         principalTable: "Tag",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "DesktopMenu",
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "IsVisible", "ModifiedDate", "Name" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Dashboard" },
+                    { 2, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Kanban" },
+                    { 3, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Notes" },
+                    { 4, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "ToDoes" },
+                    { 5, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Settings" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -437,6 +466,9 @@ namespace WorkApp.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "DesktopMenu");
 
             migrationBuilder.DropTable(
                 name: "KanbanBoardCardTag");

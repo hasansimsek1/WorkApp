@@ -8,21 +8,22 @@ using WorkApp.UI.Wpf.ViewModel;
 namespace WorkApp.UI.Wpf
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml. 
+    /// UI related work in MainWindow is done in this class (like SizeChanged event handler)
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// 
-        /// </summary>
         private MainViewModel _viewModel;
 
+        /// <summary>
+        /// Being used by the drawer component of wpf material library to determine the open/close state of the drawer.
+        /// </summary>
         public bool IsChecked { get; set; }
 
         /// <summary>
-        /// 
+        /// Binds the viewmodel parameter to its DataContext and runs the LoadAsync method of the incoming viewmodel.
         /// </summary>
-        /// <param name="viewModel"></param>
+        /// <param name="viewModel">A viewmodel class that will be bound to DataContext of the MainWindow. Dependency injector injects the related class automatically at runtime.</param>
         public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
@@ -31,11 +32,7 @@ namespace WorkApp.UI.Wpf
             Loaded += MainWindow_Loaded;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             await _viewModel.LoadAsync();
@@ -94,37 +91,5 @@ namespace WorkApp.UI.Wpf
                 }
             }
         }
-
-
-
-
-
-
-        //private void MakeWindowMobileButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Window window = Application.Current.MainWindow;
-        //    window.WindowState = WindowState.Normal;
-        //    window.Height = SystemParameters.FullPrimaryScreenHeight;
-        //    window.Width = 500;
-        //    window.Top = 0;
-        //    window.Left = 0;
-        //}
-
-        //private void MaximizeWindowButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Window window = Application.Current.MainWindow;
-        //    window.WindowState = WindowState.Maximized;
-        //}
-
-        //private void MinimizeWindowButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Window window = Application.Current.MainWindow;
-        //    window.WindowState = WindowState.Minimized;
-        //}
-
-        //private void CloseAppButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    Application.Current.Shutdown();
-        //}
     }
 }

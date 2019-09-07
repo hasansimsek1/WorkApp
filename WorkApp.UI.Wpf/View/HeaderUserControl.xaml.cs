@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace WorkApp.UI.Wpf.View
 {
-    /// <summary>
-    /// Interaction logic for DockPanelUserControl.xaml
-    /// </summary>
     public partial class HeaderUserControl : UserControl
     {
         bool _areBoxesHidden = false;

@@ -17,7 +17,11 @@ namespace WorkApp.Respository.Repositories
         private DbContext _dbContext;
         private DbSet<T> _entity;
 
-        
+        public SqlRespository()
+        {
+            _dbContext = new AppDbContextFactory().CreateDbContext(new string[0]);
+            _entity = _dbContext.Set<T>();
+        }
 
         public SqlRespository(DbContextOptions<AppDbContext> options)
         {

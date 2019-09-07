@@ -12,14 +12,24 @@ using System.ComponentModel;
 
 namespace WorkApp.UI.Wpf.ViewModel
 {
+    /// <summary>
+    /// View model that is bound to the MainWindowToDoUserControl user control. 
+    /// </summary>
     public class ToDoViewModel : ViewModelBase, IToDoViewModel
     {
         private ICrudService<ToDo> _toDoService;
 
+        /// <summary>
+        /// Bound to DataGrid element in the MainWindowToDoUserControl.
+        /// </summary>
         public ObservableCollection<ToDoBindingModel> ToDoes { get; set; }
 
 
-
+        /// <summary>
+        /// Initializes ToDoes observable collection, binds a method to the ToDoes.CollectionChanged event and 
+        /// dependency injection mechanism injects relevant ToDo service via ICrudService<ToDo> parameter.
+        /// </summary>
+        /// <param name="toDoService">Related todo service that injected by dependency injector</param>
         public ToDoViewModel(ICrudService<ToDo> toDoService)
         {
             ToDoes = new ObservableCollection<ToDoBindingModel>();
@@ -65,6 +75,11 @@ namespace WorkApp.UI.Wpf.ViewModel
 
         }
 
+
+        /// <summary>
+        /// Gets todo records from service layer asynchronously and fills the ToDoes observable collection.
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadAsync()
         {
             var result = await _toDoService.GetAllAsync();
@@ -88,9 +103,10 @@ namespace WorkApp.UI.Wpf.ViewModel
             }
         }
 
-        
-        
-        private ICommand _deleteToDoCommand;
+
+        /// <summary>
+        /// Command that binds DeleteToDo method to UI via RelayCommand<ToDoBindingModel>(DeleteToDo).
+        /// </summary>
         public ICommand DeleteToDoCommand
         {
             get
@@ -100,13 +116,17 @@ namespace WorkApp.UI.Wpf.ViewModel
                 return _deleteToDoCommand;
             }
         }
+        private ICommand _deleteToDoCommand;
         private void DeleteToDo(object parameters)
         {
             // I think it is better to bind minus button to each item in the list
             System.Windows.Forms.MessageBox.Show("Not implemented yet..");
         }
 
-        private ICommand _addToDoCommand;
+
+        /// <summary>
+        /// Command that binds AddToDo method to UI via RelayCommand<object>(AddToDo).
+        /// </summary>
         public ICommand AddToDoCommand
         {
             get
@@ -116,6 +136,7 @@ namespace WorkApp.UI.Wpf.ViewModel
                 return _addToDoCommand;
             }
         }
+        private ICommand _addToDoCommand;
         private async void AddToDo(object parameter)
         {
             ToDo toDo = new ToDo { Text = "New to do..", IsCompleted = false };

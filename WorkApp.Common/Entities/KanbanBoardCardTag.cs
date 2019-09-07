@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WorkApp.Common.Entities
+﻿namespace WorkApp.Common.Entities
 {
     public class KanbanBoardCardTag : EntityBase
     {

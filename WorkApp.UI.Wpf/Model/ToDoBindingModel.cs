@@ -2,6 +2,10 @@
 
 namespace WorkApp.UI.Wpf.Model
 {
+    /// <summary>
+    /// Data transfer object of the ToDo entity that is bound to user interface. 
+    /// Inherits from ViewModelBase class that implements INotifyPropertyChanged interface.
+    /// </summary>
     public class ToDoBindingModel : ViewModelBase
     {
         private int _id;
@@ -9,6 +13,9 @@ namespace WorkApp.UI.Wpf.Model
         private bool _isCompleted;
         private bool _isDeleted;
 
+        /// <summary>
+        /// Unique identifier for the todo object.
+        /// </summary>
         public int Id
         {
             get {
@@ -22,7 +29,9 @@ namespace WorkApp.UI.Wpf.Model
             }
         }
 
-
+        /// <summary>
+        /// Text of the todo object.
+        /// </summary>
         public string Text
         {
             get { return _text; }
@@ -34,7 +43,9 @@ namespace WorkApp.UI.Wpf.Model
             }
         }
 
-
+        /// <summary>
+        /// Status of the todo object that shows if it is completed or not.
+        /// </summary>
         public bool IsCompleted
         {
             get { return _isCompleted; }
@@ -46,7 +57,9 @@ namespace WorkApp.UI.Wpf.Model
             }
         }
 
-
+        /// <summary>
+        /// Status of the soft-delete operation of the ToDo entity.
+        /// </summary>
         public bool IsDeleted
         {
             get { return _isDeleted; }

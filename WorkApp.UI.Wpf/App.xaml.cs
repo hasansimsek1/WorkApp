@@ -7,19 +7,15 @@ using WorkApp.UI.Wpf.Startup;
 /// </summary>
 namespace WorkApp.UI.Wpf
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         /// <summary>
-        /// 
+        /// Beginning of the app that fires MainWindow. 
+        /// Also dependency resolver runs in this method.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var bootstrapper = new Bootstrapper();
+            Bootstrapper bootstrapper = new Bootstrapper();
             var container = bootstrapper.Bootstrap();
 
             var mainWindow = container.Resolve<MainWindow>();

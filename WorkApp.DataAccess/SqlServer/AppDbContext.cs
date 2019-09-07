@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using System;
 using WorkApp.Common.Entities;
 
 namespace WorkApp.DataAccess.SqlServer
@@ -11,7 +10,6 @@ namespace WorkApp.DataAccess.SqlServer
     /// </summary>
     public class AppDbContext : IdentityDbContext
     {
-
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
@@ -20,7 +18,7 @@ namespace WorkApp.DataAccess.SqlServer
         /// <summary>
         /// 
         /// </summary>
-        //public DbSet<DesktopMenu> DesktopMenu { get; set; }
+        public DbSet<DesktopMenu> DesktopMenu { get; set; }
 
         /// <summary>
         /// 
@@ -63,9 +61,6 @@ namespace WorkApp.DataAccess.SqlServer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            //modelBuilder.Entity<ApplicationUser>().HasMany(x => x.KanbanBoards).WithOne();
 
             modelBuilder.Entity<KanbanBoard>().HasOne(x => x.User).WithMany(x => x.KanbanBoards).HasForeignKey(x => x.UserId);
 
@@ -76,6 +71,14 @@ namespace WorkApp.DataAccess.SqlServer
             modelBuilder.Entity<NoteTag>().HasKey(x => new { x.TagId, x.NoteId });
 
             modelBuilder.Entity<KanbanBoardCardTag>().HasKey(x => new { x.TagId, x.CardId });
+
+            modelBuilder.Entity<DesktopMenu>().HasData(
+                    new DesktopMenu { AddedDate = DateTime.Now, IsDeleted = false, IsVisible = true, ModifiedDate = DateTime.Now, Name = "Dashboard", Id = 1 },
+                    new DesktopMenu { AddedDate = DateTime.Now, IsDeleted = false, IsVisible = true, ModifiedDate = DateTime.Now, Name = "Kanban", Id = 2 },
+                    new DesktopMenu { AddedDate = DateTime.Now, IsDeleted = false, IsVisible = true, ModifiedDate = DateTime.Now, Name = "Notes", Id = 3 },
+                    new DesktopMenu { AddedDate = DateTime.Now, IsDeleted = false, IsVisible = true, ModifiedDate = DateTime.Now, Name = "ToDoes", Id = 4 },
+                    new DesktopMenu { AddedDate = DateTime.Now, IsDeleted = false, IsVisible = true, ModifiedDate = DateTime.Now, Name = "Settings", Id = 5 }
+                );
         }
     }
 }

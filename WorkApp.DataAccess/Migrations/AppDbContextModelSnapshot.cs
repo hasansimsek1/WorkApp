@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkApp.DataAccess.SqlServer;
 
 namespace WorkApp.DataAccess.Migrations
@@ -185,6 +184,74 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WorkApp.Common.Entities.DesktopMenu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddedDate");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsVisible");
+
+                    b.Property<DateTime>("ModifiedDate");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DesktopMenu");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            IsDeleted = false,
+                            IsVisible = true,
+                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            Name = "Dashboard"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            IsDeleted = false,
+                            IsVisible = true,
+                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            Name = "Kanban"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            IsDeleted = false,
+                            IsVisible = true,
+                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            Name = "Notes"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            IsDeleted = false,
+                            IsVisible = true,
+                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            Name = "ToDoes"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            IsDeleted = false,
+                            IsVisible = true,
+                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            Name = "Settings"
+                        });
+                });
+
             modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoard", b =>
                 {
                     b.Property<int>("Id")
@@ -195,7 +262,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Name");
 
@@ -222,7 +289,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<int?>("KanbanBoardColumnId");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<int>("Order");
 
@@ -247,7 +314,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.HasKey("TagId", "CardId");
 
@@ -268,7 +335,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<int?>("KanbanBoardId");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<int>("Priority");
 
@@ -293,7 +360,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Title");
 
@@ -318,7 +385,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.HasKey("TagId", "NoteId");
 
@@ -337,7 +404,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Name");
 
@@ -358,7 +425,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<DateTime?>("ModifiedDate");
+                    b.Property<DateTime>("ModifiedDate");
 
                     b.Property<string>("Text");
 

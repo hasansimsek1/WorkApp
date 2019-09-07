@@ -1,29 +1,60 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
 using WorkApp.Service.Interfaces;
-using WorkApp.UI.AspNetCoreMvc.ViewModels;
 
 namespace WorkApp.UI.AspNetCoreMvc.Controllers
 {
+    /// <summary>
+    /// Controller that backs kanban board related views.
+    /// It serves the logic related to kanban board pages.
+    /// 
+    /// <para/>
+    /// 
+    /// Inherits from : 
+    /// <see cref="BaseController"/>
+    /// 
+    /// <para/>
+    /// 
+    /// Attributes : 
+    /// <see cref="AuthorizeAttribute"/>
+    /// 
+    /// <para/>
+    /// 
+    /// Actions : 
+    /// <para/><see cref="Index"/> (Attribute : [HttpGet] )
+    /// <para/><see cref="Add"/> (Attribute : [HttpGet] )
+    /// <para/><see cref="Add(KanbanBoardDto)"/> Attribute : [HttpPost] )
+    /// <para/><see cref="Board(int)"/>  (Attribute : [HttpGet] )
+    /// <para/>
+    /// 
+    /// </summary>
     [Authorize]
     public class KanbanBoardController : BaseController
     {
         private readonly IKanbanBoardService _kanbanService;
-        private readonly string _userId;
 
+
+        /// <summary>
+        /// Constructor for getting dependency injection. Dependencies : <see cref="IKanbanBoardService"/>
+        /// </summary>
         public KanbanBoardController(IKanbanBoardService kanbanService)
         {
             _kanbanService = kanbanService;
-            _userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
+
+
+        /// <summary>
+        /// Gets all kanban board records that belong to the user from service layer asynchronously and sends the data to the Index view.
+        /// </summary>
         public async Task<IActionResult> Index()
         {
-            var result = await _kanbanService.GetAllAsync(_userId);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var result = await _kanbanService.GetAllAsync(userId);
 
             if (result.HasError)
             {
@@ -33,18 +64,41 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             return View(result.Data);
         }
 
+
+
+        /// <summary>
+        /// Just returns the Add view to the client.
+        /// <para/>
+        /// Attributes : HttpGet
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
 
+
+
+        /// <summary>
+        /// Gets the data from the user via <see cref="KanbanBoardDto"/> viewmodel, 
+        /// validates the incoming model, 
+        /// adds UserId to the model, 
+        /// sends the data to service layer to be added,
+        /// redirects the request to the /KanbanBoard/Index.
+        /// If error occures while adding new kanban board to the database, adds the error to the ModelState and returns the view again.
+        /// 
+        /// <para/>
+        /// Attributes : HttpPost
+        /// 
+        /// </summary>
+        /// <param name="model">Model for new kanban board.</param>
         [HttpPost]
         public async Task<IActionResult> Add(KanbanBoardDto model)
         {
             if(ModelState.IsValid)
             {
-                model.UserId = _userId;
+                model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 var result = await _kanbanService.AddAsync(model);
 
@@ -61,6 +115,14 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             return View(model);
         }
 
+
+
+        /// <summary>
+        /// Gets the kanban board details from service layer asynchronously and sends the data to the view.
+        /// <para/>
+        /// Attributes : HttpGet
+        /// </summary>
+        /// <param name="id">Id of the kanban board.</param>
         [HttpGet]
         public async Task<IActionResult> Board(int id)
         {
@@ -70,7 +132,10 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             {
                 return RedirectToError();
             }
-            
+
+            // temporary code
+            ViewBag.KanbanId = id;
+
             return View(result.Data);
         }
     }

@@ -1,68 +1,12 @@
 ﻿@model KanbanBoardDto;
 
 @{
-    ViewData["Title"] = "Board";
+    ViewData["Title"] = "Kanban Board";
 }
 
-<div class="kanbanwrapper">
-    <div class="kanbantop">
-        <aside>
-            <h4 class="titlelist">Boardlarım / <b>Proje Adı</b></h4>
-        </aside>
-        <aside>
-            <button id="addButton" class="addbtn">
-                New Board
-            </button>
-            <button
-                    class="cancelbtn">
-                Cancel
-            </button>
-        </aside>
-    </div>
-    <div class="kanbansecwrapper kanbanverticallist">
-        <div class="verticallist">
-            <aside class="toplist">
-                <h3>Actives</h3>
-            </aside>
-            <div class="middlelistvertical contentlistwrap">
-                <aside class="middlecontent">
-                    <p>example</p>
-                </aside>
-            </div>
-        </div>
-        <div class="verticallist">
-            <aside class="toplist">
-                <h3>Finisheds</h3>
-            </aside>
-            <div class="middlelistvertical contentlistwrap">
-                <aside class="middlecontent">
-                    <p>example finished</p>
-                </aside>
-            </div>
-            <div class="middlelistvertical contentlistwrap">
-                <aside class="middlecontent">
-                    <p>example</p>
-                </aside>
-            </div>
-        </div>
-        <div class="verticallist">
-            <aside class="toplist">
-                <h3>To Do List</h3>
-            </aside>
-            <div class="middlelistvertical contentlistwrap">
-                <aside class="middlecontent">
-                    <p>example to do list.</p>
-                </aside>
-            </div>
-        </div>
-    </div>
-    <div class="kanbansecwrapper">
-        <form>
-            <aside >
-                <input type="text" placeholder="Board Name" />
-            </aside>
-            <button class="addbtn" type="submit">Save Board</button>
-        </form>
-    </div>
-</div>
-
+<h1>
+    Kanban Board 
+</h1>
+<h2>
+    Id = @ViewBag.KanbanId
+</h2>
