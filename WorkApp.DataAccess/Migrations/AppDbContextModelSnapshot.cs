@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkApp.DataAccess.SqlServer;
 
 namespace WorkApp.DataAccess.Migrations
@@ -184,7 +185,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.DesktopMenu", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.DesktopMenu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -200,6 +201,8 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("Order");
+
                     b.HasKey("Id");
 
                     b.ToTable("DesktopMenu");
@@ -208,51 +211,56 @@ namespace WorkApp.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(1029),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
-                            Name = "Dashboard"
+                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(2859),
+                            Name = "Dashboard",
+                            Order = 0
                         },
                         new
                         {
                             Id = 2,
-                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4214),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
-                            Name = "Kanban"
+                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4235),
+                            Name = "Kanban",
+                            Order = 0
                         },
                         new
                         {
                             Id = 3,
-                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4254),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
-                            Name = "Notes"
+                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4256),
+                            Name = "Notes",
+                            Order = 0
                         },
                         new
                         {
                             Id = 4,
-                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4260),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
-                            Name = "ToDoes"
+                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4261),
+                            Name = "ToDoes",
+                            Order = 0
                         },
                         new
                         {
                             Id = 5,
-                            AddedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
+                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4264),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168),
-                            Name = "Settings"
+                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4265),
+                            Name = "Settings",
+                            Order = 0
                         });
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoard", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -275,7 +283,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("KanbanBoard");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoardCard", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoardCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,7 +310,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("KanbanBoardCard");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoardCardTag", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoardCardTag", b =>
                 {
                     b.Property<int>("TagId");
 
@@ -323,7 +331,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("KanbanBoardCardTag");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoardColumn", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoardColumn", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -337,7 +345,7 @@ namespace WorkApp.DataAccess.Migrations
 
                     b.Property<DateTime>("ModifiedDate");
 
-                    b.Property<int>("Priority");
+                    b.Property<int>("Order");
 
                     b.Property<string>("Title");
 
@@ -348,7 +356,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("KanbanBoardColumn");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.Note", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.Note", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -373,7 +381,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("Note");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.NoteTag", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.NoteTag", b =>
                 {
                     b.Property<int>("TagId");
 
@@ -394,7 +402,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("NoteTag");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.Tag", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -413,7 +421,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("Tag");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.ToDo", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.ToDo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -438,7 +446,7 @@ namespace WorkApp.DataAccess.Migrations
                     b.ToTable("ToDo");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.ApplicationUser", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
@@ -490,63 +498,63 @@ namespace WorkApp.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoard", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoard", b =>
                 {
-                    b.HasOne("WorkApp.Common.Entities.ApplicationUser", "User")
+                    b.HasOne("WorkApp.DataAccess.Entities.ApplicationUser", "User")
                         .WithMany("KanbanBoards")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoardCard", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoardCard", b =>
                 {
-                    b.HasOne("WorkApp.Common.Entities.KanbanBoardColumn")
+                    b.HasOne("WorkApp.DataAccess.Entities.KanbanBoardColumn")
                         .WithMany("Cards")
                         .HasForeignKey("KanbanBoardColumnId");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoardCardTag", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoardCardTag", b =>
                 {
-                    b.HasOne("WorkApp.Common.Entities.KanbanBoardCard", "Card")
+                    b.HasOne("WorkApp.DataAccess.Entities.KanbanBoardCard", "Card")
                         .WithMany("Tags")
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WorkApp.Common.Entities.Tag", "Tag")
+                    b.HasOne("WorkApp.DataAccess.Entities.Tag", "Tag")
                         .WithMany("KanbanBoardCards")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.KanbanBoardColumn", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.KanbanBoardColumn", b =>
                 {
-                    b.HasOne("WorkApp.Common.Entities.KanbanBoard")
+                    b.HasOne("WorkApp.DataAccess.Entities.KanbanBoard")
                         .WithMany("Columns")
                         .HasForeignKey("KanbanBoardId");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.Note", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.Note", b =>
                 {
-                    b.HasOne("WorkApp.Common.Entities.ApplicationUser", "User")
+                    b.HasOne("WorkApp.DataAccess.Entities.ApplicationUser", "User")
                         .WithMany("Notes")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.NoteTag", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.NoteTag", b =>
                 {
-                    b.HasOne("WorkApp.Common.Entities.Note", "Note")
+                    b.HasOne("WorkApp.DataAccess.Entities.Note", "Note")
                         .WithMany("Tags")
                         .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WorkApp.Common.Entities.Tag", "Tag")
+                    b.HasOne("WorkApp.DataAccess.Entities.Tag", "Tag")
                         .WithMany("Notes")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WorkApp.Common.Entities.ToDo", b =>
+            modelBuilder.Entity("WorkApp.DataAccess.Entities.ToDo", b =>
                 {
-                    b.HasOne("WorkApp.Common.Entities.ApplicationUser", "User")
+                    b.HasOne("WorkApp.DataAccess.Entities.ApplicationUser", "User")
                         .WithMany("ToDoes")
                         .HasForeignKey("UserId");
                 });

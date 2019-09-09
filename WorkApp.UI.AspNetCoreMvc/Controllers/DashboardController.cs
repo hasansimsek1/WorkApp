@@ -82,27 +82,28 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
              * 
              */
 
+
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var totalKanbanBoardsCountResult = await _kanbanBoardService.GetTotalKanbanBoardCountAsync(userId);
+            var totalKanbanBoardsCountResult = await _kanbanBoardService.GetTotalKanbanBoardCountOfUserAsync(userId);
             int totalKanbanBoardCount = totalKanbanBoardsCountResult.Data;
 
-            var lastEditedKanbanBoardResult = await _kanbanBoardService.GetLastEditedKanbanBoardAsync(userId);
+            var lastEditedKanbanBoardResult = await _kanbanBoardService.GetLastEditedKanbanBoardOfUserAsync(userId);
             KanbanBoardDto lastEditedKanbanBoard = lastEditedKanbanBoardResult.Data;
 
-            var totalNoteCountResult = await _noteService.GetTotalNoteCountAsync(userId);
+            var totalNoteCountResult = await _noteService.GetTotalNoteCountOfUserAsync(userId);
             int totalNoteCount = totalNoteCountResult.Data;
 
-            var lastEditedNoteResult = await _noteService.GetLastEditedNoteAsync(userId);
+            var lastEditedNoteResult = await _noteService.GetLastEditedNoteOfUserAsync(userId);
             NoteDto lastEditedNote = lastEditedNoteResult.Data;
 
-            var completedToDoCountResult = await _toDoService.GetCompletedToDoCountAsync(userId);
+            var completedToDoCountResult = await _toDoService.GetCompletedToDoCountOfUserAsync(userId);
             int completedToDoCount = completedToDoCountResult.Data;
 
-            var incompleteToDoCountResult = await _toDoService.GetIncompleteToDoCountAsync(userId);
+            var incompleteToDoCountResult = await _toDoService.GetIncompleteToDoCountOfUserAsync(userId);
             int incompleteToDoCount = incompleteToDoCountResult.Data;
 
-            var toDoesOfTodayResult = await _toDoService.GetToDoesOfTodayAsync(userId);
+            var toDoesOfTodayResult = await _toDoService.GetToDoesOfUserOfTodayAsync(userId);
             List<ToDoDto> toDoesOfToday = toDoesOfTodayResult.Data.ToList();
 
             DashboardViewModel dashboardViewModel = new DashboardViewModel

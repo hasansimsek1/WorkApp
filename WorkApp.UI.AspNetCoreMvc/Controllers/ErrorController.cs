@@ -48,7 +48,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         /// <summary>
         /// A centralized unexpected error handling controller. Just returns the "Error" view for now.
         /// </summary>
-        /// <returns></returns>
         [Route("Error")]
         public IActionResult UnhandledError()
         {

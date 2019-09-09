@@ -14,15 +14,23 @@ namespace WorkApp.DataAccess.SqlServer
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+            try
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
 
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("default"));
+                var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("default"));
 
-            return new AppDbContext(optionsBuilder.Options);
+                return new AppDbContext(optionsBuilder.Options);
+            }
+            catch
+            {
+                // log
+                throw;
+            }
         }
     }
 }

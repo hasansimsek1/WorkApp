@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using WorkApp.Common.Entities;
 using WorkApp.UI.Wpf.Interfaces;
 using System.Windows;
 using System.Windows.Input;
@@ -9,6 +8,7 @@ using WorkApp.Service.Interfaces;
 using WorkApp.UI.Wpf.Model;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using WorkApp.Common.DTOs;
 
 namespace WorkApp.UI.Wpf.ViewModel
 {
@@ -17,7 +17,7 @@ namespace WorkApp.UI.Wpf.ViewModel
     /// </summary>
     public class ToDoViewModel : ViewModelBase, IToDoViewModel
     {
-        private ICrudService<ToDo> _toDoService;
+        private IToDoService _toDoService;
 
         /// <summary>
         /// Bound to DataGrid element in the MainWindowToDoUserControl.
@@ -30,7 +30,7 @@ namespace WorkApp.UI.Wpf.ViewModel
         /// dependency injection mechanism injects relevant ToDo service via ICrudService<ToDo> parameter.
         /// </summary>
         /// <param name="toDoService">Related todo service that injected by dependency injector</param>
-        public ToDoViewModel(ICrudService<ToDo> toDoService)
+        public ToDoViewModel(IToDoService toDoService)
         {
             ToDoes = new ObservableCollection<ToDoBindingModel>();
             _toDoService = toDoService;
@@ -63,14 +63,21 @@ namespace WorkApp.UI.Wpf.ViewModel
                 return;
             }
 
-            ToDo toDoEntity = result.Data;
-            toDoEntity.IsCompleted = toDoBindingModel.IsCompleted;
-            toDoEntity.IsDeleted = toDoBindingModel.IsDeleted;
-            toDoEntity.Text = toDoBindingModel.Text;
-            
-            result = await _toDoService.UpdateAsync(toDoEntity);
+            ToDoDto toDoDto = result.Data;
+            toDoDto.IsCompleted = toDoBindingModel.IsCompleted;
+            toDoDto.IsDeleted = toDoBindingModel.IsDeleted;
+            toDoDto.Text = toDoBindingModel.Text;
 
-            if(result.HasError)
+            result = await _toDoService.UpdateAsync(toDoDto);
+
+            //ToDo toDoEntity = result.Data;
+            //toDoEntity.IsCompleted = toDoBindingModel.IsCompleted;
+            //toDoEntity.IsDeleted = toDoBindingModel.IsDeleted;
+            //toDoEntity.Text = toDoBindingModel.Text;
+
+            //result = await _toDoService.UpdateAsync(toDoEntity);
+
+            if (result.HasError)
                 System.Windows.Forms.MessageBox.Show("An error has occured while updating the record!");
 
         }
@@ -139,9 +146,9 @@ namespace WorkApp.UI.Wpf.ViewModel
         private ICommand _addToDoCommand;
         private async void AddToDo(object parameter)
         {
-            ToDo toDo = new ToDo { Text = "New to do..", IsCompleted = false };
+            ToDoDto toDo = new ToDoDto { Text = "New to do..", IsCompleted = false };
 
-            var result = await _toDoService.InsertAsync(toDo);
+            var result = await _toDoService.AddAsync(toDo);
 
             if (result.HasError)
             {

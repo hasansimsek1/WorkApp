@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using WorkApp.Common.Entities;
+using WorkApp.Common.DTOs;
 using WorkApp.Service.Interfaces;
 using WorkApp.UI.Wpf.Interfaces;
 
@@ -12,16 +12,16 @@ namespace WorkApp.UI.Wpf.ViewModel
     /// </summary>
     public class DrawerViewModel : ViewModelBase, IDrawerViewModel
     {
-        private ICrudService<DesktopMenu> _service;
+        private IDesktopMenuService _desktopMenuService;
 
         /// <summary>
         /// Dependency injector injects the corresponding ICrudService<DesktopMenu> service class via this constructor.
         /// Also initializes the Menu observable collection of <see cref="DesktopMenu"/>.
         /// </summary>
-        public DrawerViewModel(ICrudService<DesktopMenu> service)
+        public DrawerViewModel(IDesktopMenuService desktopMenuService)
         {
-            Menu = new ObservableCollection<DesktopMenu>();
-            _service = service;
+            Menu = new ObservableCollection<DesktopMenuDto>();
+            _desktopMenuService = desktopMenuService;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace WorkApp.UI.Wpf.ViewModel
         /// </summary>
         public async Task LoadAsync()
         {
-            var result = await _service.GetAllAsync();
+            var result = await _desktopMenuService.GetDesktopMenuItemsAsync();
 
             if(result.HasError)
             {
@@ -46,7 +46,7 @@ namespace WorkApp.UI.Wpf.ViewModel
         /// <summary>
         /// Keeps the menu items that are bound to the drawer component in the UI.
         /// </summary>
-        public ObservableCollection<DesktopMenu> Menu { get; set; }
+        public ObservableCollection<DesktopMenuDto> Menu { get; set; }
         
     }
 }

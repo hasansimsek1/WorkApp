@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interfaces\ICrudService.cs" />
+    <Compile Remove="Services\CrudService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WorkApp.Common\WorkApp.Common.csproj" />
     <ProjectReference Include="..\WorkApp.Respository\WorkApp.Respository.csproj" />
   </ItemGroup>

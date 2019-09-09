@@ -1,95 +1,80 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
-using WorkApp.Common.Entities;
+using WorkApp.DataAccess.Entities;
+using WorkApp.Common.Extensions;
 using WorkApp.Service.Interfaces;
+using WorkApp.Respository.Interfaces;
 
 namespace WorkApp.Service.Services
 {
+    /// <summary>
+    /// Service that is consumed by note taking related UI elements.
+    /// <para/>
+    /// Implements : <see cref="INoteService"/>
+    /// </summary>
     public class NoteService : INoteService
     {
-        private readonly ICrudService<Note> _noteCrudService;
+        private readonly ICrudRepository<Note, NoteDto> _noteCrudRepository;
+        private readonly IMapper _mapper;
 
-        public NoteService(ICrudService<Note> noteCrudService)
+        /// <summary>
+        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudService{T}"/>
+        /// </summary>
+        public NoteService(ICrudRepository<Note, NoteDto> noteCrudRepository, IMapper mapper)
         {
-            _noteCrudService = noteCrudService;
+            _noteCrudRepository = noteCrudRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Result<IEnumerable<NoteDto>>> GetAllAsync(string userId)
+        /// <summary>
+        /// Retrieves note records of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<List<NoteDto>>> GetByUserId(string userId)
         {
-            var result = await _noteCrudService.GetAllAsync();
+            var result = await _noteCrudRepository.GetAsync(x => x.UserId == userId);
 
             if (result.HasError)
             {
-                return new Result<IEnumerable<NoteDto>>() { Data = null, Errors = result.Errors };
+                return new Result<List<NoteDto>>() { Data = null, Errors = result.Errors };
             }
 
-            if(result.Data != null)
-            {
-                var noteDtoList = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).Select(x => new NoteDto
-                {
-                    AddedDate = x.AddedDate,
-                    IsDeleted = x.IsDeleted,
-                    Content = x.Content,
-                    Id = x.Id,
-                    ModifiedDate = x.ModifiedDate,
-                    Tags = x.Tags,
-                    Title = x.Title,
-                    User = x.User,
-                    UserId = x.UserId
-                });
-
-                return new Result<IEnumerable<NoteDto>> { Data = noteDtoList };
-            }
-            else
-            {
-                return new Result<IEnumerable<NoteDto>> { Data = null };
-            }
+            return new Result<List<NoteDto>>(result.Data);
         }
 
-        public async Task<Result<NoteDto>> GetLastEditedNoteAsync(string userId)
+        /// <summary>
+        /// Retrieves last edited note record by the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<NoteDto>> GetLastEditedNoteOfUserAsync(string userId)
         {
-            var result = await _noteCrudService.GetAllAsync();
+            var result = await _noteCrudRepository.GetAsync(x => x.UserId == userId);
 
             if (result.HasError)
             {
                 return new Result<NoteDto>() { Data = null, Errors = result.Errors };
             }
 
-            var note = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).OrderByDescending(x => x.ModifiedDate).FirstOrDefault();
-
-            NoteDto noteDto = new NoteDto();
-
-            if (note != null)
-            {
-                noteDto = new NoteDto
-                {
-                    Id = note.Id,
-                    Title = note.Title,
-                    Content = note.Content,
-                    AddedDate = note.AddedDate,
-                    ModifiedDate = note.ModifiedDate,
-                    IsDeleted = note.IsDeleted,
-                    Tags = note.Tags.ToList(),
-                    User = note.User,
-                    UserId = note.UserId
-                };
-            }
-            
-            return new Result<NoteDto>() { Data = noteDto };
+            return new Result<NoteDto>(result.Data.OrderByDescending(x => x.Id).FirstOrDefault());
         }
 
-        public async Task<Result<int>> GetTotalNoteCountAsync(string userId)
+        /// <summary>
+        /// Retrieves total note records of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<int>> GetTotalNoteCountOfUserAsync(string userId)
         {
-            var result = await _noteCrudService.GetAllAsync();
+            var result = await _noteCrudRepository.GetAsync(x => x.UserId == userId);
 
             if (result.HasError)
             {
                 return new Result<int>() { Data = 0, Errors = result.Errors };
             }
 
-            return new Result<int>() { Data = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).ToList().Count };
+            return new Result<int>(result.Data.Count);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var toDoListResult = await _toDoService.GetToDoesAsync(userId);
+            var toDoListResult = await _toDoService.GetToDoesOfUserAsync(userId);
 
             if (toDoListResult.HasError)
             {

@@ -2,11 +2,11 @@
 
 namespace WorkApp.Common.Interfaces
 {
+    /// <summary>
+    /// Base interface to entities.
+    /// </summary>
     public interface IEntity
     {
-        int Id { get; set; }
-        DateTime AddedDate { get; set; }
-        DateTime ModifiedDate { get; set; }
-        bool IsDeleted { get; set; }
+
     }
 }

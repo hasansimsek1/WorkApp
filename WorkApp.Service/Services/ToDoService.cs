@@ -3,229 +3,175 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
-using WorkApp.Common.Entities;
+using WorkApp.Respository.Interfaces;
+using WorkApp.DataAccess.Entities;
 using WorkApp.Service.Interfaces;
+using AutoMapper;
+using System.Linq.Expressions;
 
 namespace WorkApp.Service.Services
 {
+    /// <summary>
+    /// Service that is consumed by todo related UI elements.
+    /// <para/>
+    /// Implements : <see cref="IToDoService"/>
+    /// </summary>
     public class ToDoService : IToDoService
     {
-        private readonly ICrudService<ToDo> _toDoService;
+        private readonly ICrudRepository<ToDo, ToDoDto> _toDoRepository;
+        private readonly IMapper _mapper;
 
-        public ToDoService(ICrudService<ToDo> toDoService)
+
+        /// <summary>
+        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudService{ToDo}"/>
+        /// </summary>
+        public ToDoService(ICrudRepository<ToDo, ToDoDto> toDoRepository, IMapper mapper)
         {
-            _toDoService = toDoService;
+            _toDoRepository = toDoRepository;
+            _mapper = mapper;
         }
 
+        /// <summary>
+        /// Retrieves all todo records.
+        /// </summary>
+        public async Task<Result<List<ToDoDto>>> GetAllAsync()
+        {
+            return await _toDoRepository.GetAsync();
+        }
+
+        /// <summary>
+        /// Retrieves the todo record with given Id.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<Result<ToDoDto>> GetByIdAsync(int Id)
+        {
+            return await _toDoRepository.GetAsync(Id);
+        }
+
+        /// <summary>
+        /// Retrieves all todo records of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<List<ToDoDto>>> GetToDoesOfUserAsync(string userId)
+        {
+            return await _toDoRepository.GetAsync(x => x.UserId == userId);
+        }
+        
+        /// <summary>
+        /// Retrieves completed todoes of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<List<ToDoDto>>> GetCompletedToDoesOfUserAsync(string userId)
+        {
+            return await _toDoRepository.GetAsync(x => x.UserId == userId && x.IsCompleted == true);
+        }
+        
+        /// <summary>
+        /// Retrieves incomplete todoes of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<List<ToDoDto>>> GetIncompleteToDoesOfUserAsync(string userId)
+        {
+            return await _toDoRepository.GetAsync(x => x.UserId == userId && x.IsCompleted == false);
+        }
+        
+        /// <summary>
+        /// Retrieves total todo count of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<int>> GetTotalToDoCountOfUserAsync(string userId)
+        {
+            var result = await _toDoRepository.GetAsync(x => x.UserId == userId);
+
+            if (result.HasError)
+            {
+                return new Result<int>() { Data = 0, Errors = result.Errors };
+            }
+
+            return new Result<int>(result.Data.Count);
+        }
+        
+        /// <summary>
+        /// Retrieves total completed todo count of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<int>> GetCompletedToDoCountOfUserAsync(string userId)
+        {
+            var result = await _toDoRepository.GetAsync(x => x.UserId == userId && x.IsCompleted == true);
+
+            if (result.HasError)
+            {
+                return new Result<int>() { Data = 0, Errors = result.Errors };
+            }
+
+            return new Result<int>(result.Data.Count);
+        }
+        
+        /// <summary>
+        /// Retrieves total incomplete todo count of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<int>> GetIncompleteToDoCountOfUserAsync(string userId)
+        {
+            var result = await _toDoRepository.GetAsync(x => x.UserId == userId && x.IsCompleted == false);
+
+            if (result.HasError)
+            {
+                return new Result<int>() { Data = 0, Errors = result.Errors };
+            }
+
+            return new Result<int>(result.Data.Count);
+        }
+        
+        /// <summary>
+        /// Retrieves todoes of user that added for today.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<List<ToDoDto>>> GetToDoesOfUserOfTodayAsync(string userId)
+        {
+            return await _toDoRepository.GetAsync(x => x.AddedDate.Date == DateTime.Now.Date || x.ModifiedDate.Date == DateTime.Now.Date);
+        }
+
+
+        /// <summary>
+        /// Retrieves todoes of the user between two dates.
+        /// </summary>
+        /// <param name="beginDate">Beginning date of the search.</param>
+        /// <param name="endDate">End date of the search.</param>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<List<ToDoDto>>> GetToDoesOfUserBetweenDatesAsync(DateTime beginDate, DateTime endDate, string userId)
+        {
+            // SIMPLE CODE KATA FOR FUN.. DON'T TAKE IT SERIOUSLY..
+
+            //Expression<Func<ToDo, bool>> TodoesOfUserBetweenDatesExpression = x =>                     
+            Func<ToDo, bool> func = x =>
+                    (x.AddedDate > beginDate || x.ModifiedDate > beginDate)     // 
+                    &&
+                    (x.AddedDate < endDate || x.ModifiedDate < endDate)
+                    &&
+                    x.UserId == userId;
+
+            Expression<Func<ToDo, bool>> expression = exp => func(exp);
+            
+            return await _toDoRepository.GetAsync(expression);
+        }
+        
+
+        /// <summary>
+        /// Adds new todo record and returns back <see cref="ToDoDto"/> with created entity Id.
+        /// </summary>
         public async Task<Result<ToDoDto>> AddAsync(ToDoDto newToDoDto)
         {
-            ToDo newToDo = new ToDo
-            {
-                Text = newToDoDto.Text,
-                UserId = newToDoDto.UserId
-            };
-
-            var result = await _toDoService.InsertAsync(newToDo);
-
-            if(result.HasError)
-            {
-                return new Result<ToDoDto> { Data = null };
-            }
-
-            newToDoDto.Id = result.Data.Id;
-
-            return new Result<ToDoDto> { Data = newToDoDto };
+            return await _toDoRepository.InsertAsync(newToDoDto);
         }
 
-        public async Task<Result<int>> GetCompletedToDoCountAsync(string userId)
+        /// <summary>
+        /// Updates the todo record.
+        /// </summary>
+        public async Task<Result<ToDoDto>> UpdateAsync(ToDoDto toDoDto)
         {
-            var result = await _toDoService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<int>() { Data = 0, Errors = result.Errors };
-            }
-            
-            return new Result<int>() { Data = result.Data.Where(x => x.IsCompleted == true && x.IsDeleted == false && x.UserId == userId).ToList().Count };
-        }
-
-        public async Task<Result<IEnumerable<ToDoDto>>> GetCompletedToDoesAsync(string userId)
-        {
-            var result = await _toDoService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<IEnumerable<ToDoDto>>() { Data = null, Errors = result.Errors };
-            }
-
-            if(result.Data != null)
-            {
-                var toDoDtoList = result.Data.Where(x => x.IsDeleted == false && x.IsCompleted == true && x.UserId == userId).Select(x => new ToDoDto
-                {
-                    AddedDate = x.AddedDate,
-                    IsDeleted = x.IsDeleted,
-                    Id = x.Id,
-                    IsCompleted = x.IsCompleted,
-                    ModifiedDate = x.ModifiedDate,
-                    Text = x.Text,
-                    User = x.User,
-                    UserId = x.UserId
-                });
-
-                return new Result<IEnumerable<ToDoDto>> { Data = toDoDtoList };
-            }
-            else
-            {
-                return new Result<IEnumerable<ToDoDto>> { Data = null };
-            }
-        }
-
-        public async Task<Result<int>> GetIncompleteToDoCountAsync(string userId)
-        {
-            var result = await _toDoService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<int>() { Data = 0, Errors = result.Errors };
-            }
-
-            return new Result<int>() { Data = result.Data.Where(x => x.IsCompleted == false && x.IsDeleted == false && x.UserId == userId).ToList().Count };
-        }
-
-        public async Task<Result<IEnumerable<ToDoDto>>> GetIncompleteToDoesAsync(string userId)
-        {
-            var result = await _toDoService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<IEnumerable<ToDoDto>>() { Data = null, Errors = result.Errors };
-            }
-
-            if(result.Data != null)
-            {
-                var toDoDtoList = result.Data.Where(x => x.IsDeleted == false && x.IsCompleted == false && x.UserId == userId).Select(x => new ToDoDto
-                {
-                    AddedDate = x.AddedDate,
-                    IsCompleted = x.IsCompleted,
-                    IsDeleted = x.IsDeleted,
-                    Id = x.Id,
-                    ModifiedDate = x.ModifiedDate,
-                    Text = x.Text,
-                    User = x.User,
-                    UserId = x.UserId
-                });
-
-                return new Result<IEnumerable<ToDoDto>> { Data = toDoDtoList };
-            }
-            else
-            {
-                return new Result<IEnumerable<ToDoDto>> { Data = null };
-            }
-        }
-
-        public async Task<Result<IEnumerable<ToDoDto>>> GetToDoesAsync(string userId)
-        {
-            var result = await _toDoService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<IEnumerable<ToDoDto>>() { Data = null, Errors = result.Errors };
-            }
-
-            if (result.Data != null)
-            {
-                var toDoDtoList = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).Select(x => new ToDoDto
-                {
-                    AddedDate = x.AddedDate,
-                    IsCompleted = x.IsCompleted,
-                    IsDeleted = x.IsDeleted,
-                    Id = x.Id,
-                    ModifiedDate = x.ModifiedDate,
-                    Text = x.Text,
-                    User = x.User,
-                    UserId = x.UserId
-                });
-
-                return new Result<IEnumerable<ToDoDto>> { Data = toDoDtoList };
-            }
-            else
-            {
-                return new Result<IEnumerable<ToDoDto>> { Data = null };
-            }
-        }
-
-        public async Task<Result<IEnumerable<ToDoDto>>> GetToDoesBetweenDatesAsync(DateTime beingDate, DateTime endDate, string userId)
-        {
-            var result = await _toDoService.GetAllAsync();
-
-            if(result.HasError)
-            {
-                return new Result<IEnumerable<ToDoDto>>() { Data = null, Errors = result.Errors };
-            }
-
-            if (result.Data != null)
-            {
-                var toDoDtoList = result.Data.Where(x => x.AddedDate < endDate && x.AddedDate > beingDate && x.IsDeleted == false && x.UserId == userId).Select(x => new ToDoDto
-                {
-                    AddedDate = x.AddedDate,
-                    IsCompleted = x.IsCompleted,
-                    IsDeleted = x.IsDeleted,
-                    Id = x.Id,
-                    ModifiedDate = x.ModifiedDate,
-                    Text = x.Text,
-                    User = x.User,
-                    UserId = x.UserId
-                });
-
-                return new Result<IEnumerable<ToDoDto>> { Data = toDoDtoList };
-            }
-            else
-            {
-                return new Result<IEnumerable<ToDoDto>> { Data = null };
-            }
-        }
-
-        public async Task<Result<IEnumerable<ToDoDto>>> GetToDoesOfTodayAsync(string userId)
-        {
-            var result = await _toDoService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<IEnumerable<ToDoDto>>() { Data = null, Errors = result.Errors };
-            }
-
-            if (result.Data != null)
-            {
-                var toDoDtoList = result.Data.Where(x => x.AddedDate.Date == DateTime.Now.Date && x.IsDeleted == false && x.UserId == userId).Select(x => new ToDoDto
-                {
-                    AddedDate = x.AddedDate,
-                    IsCompleted = x.IsCompleted,
-                    IsDeleted = x.IsDeleted,
-                    Id = x.Id,
-                    ModifiedDate = x.ModifiedDate,
-                    Text = x.Text,
-                    User = x.User,
-                    UserId = x.UserId
-                });
-
-                return new Result<IEnumerable<ToDoDto>> { Data = toDoDtoList };
-            }
-            else
-            {
-                return new Result<IEnumerable<ToDoDto>> { Data = null };
-            }
-        }
-
-        public async Task<Result<int>> GetTotalToDoCountAsync(string userId)
-        {
-            var result = await _toDoService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<int>() { Data = 0, Errors = result.Errors };
-            }
-
-            return new Result<int>() { Data = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).ToList().Count };
+            return await _toDoRepository.UpdateAsync(toDoDto);
         }
     }
 }

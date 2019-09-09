@@ -58,6 +58,7 @@ namespace WorkApp.DataAccess.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    Order = table.Column<int>(nullable: false),
                     IsVisible = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -268,7 +269,7 @@ namespace WorkApp.DataAccess.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    Priority = table.Column<int>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
                     KanbanBoardId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -365,14 +366,14 @@ namespace WorkApp.DataAccess.Migrations
 
             migrationBuilder.InsertData(
                 table: "DesktopMenu",
-                columns: new[] { "Id", "AddedDate", "IsDeleted", "IsVisible", "ModifiedDate", "Name" },
+                columns: new[] { "Id", "AddedDate", "IsDeleted", "IsVisible", "ModifiedDate", "Name", "Order" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Dashboard" },
-                    { 2, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Kanban" },
-                    { 3, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Notes" },
-                    { 4, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "ToDoes" },
-                    { 5, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), false, true, new DateTime(2019, 9, 6, 17, 19, 31, 920, DateTimeKind.Local).AddTicks(7168), "Settings" }
+                    { 1, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(1029), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(2859), "Dashboard", 0 },
+                    { 2, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4214), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4235), "Kanban", 0 },
+                    { 3, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4254), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4256), "Notes", 0 },
+                    { 4, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4260), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4261), "ToDoes", 0 },
+                    { 5, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4264), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4265), "Settings", 0 }
                 });
 
             migrationBuilder.CreateIndex(

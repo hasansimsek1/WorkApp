@@ -2,7 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WorkApp.Common.Entities;
+using WorkApp.Common.DTOs;
+using WorkApp.Service.Interfaces;
 using WorkApp.UI.AspNetCoreMvc.ViewModels;
 
 namespace WorkApp.UI.AspNetCoreMvc.Controllers
@@ -40,16 +41,26 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-                
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+
+
+        //private readonly UserManager<ApplicationUser> _userManager;
+        //private readonly SignInManager<ApplicationUser> _signInManager;
+
+        //public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        //{
+        //    _userManager = userManager;
+        //    _signInManager = signInManager;
+        //}
+
+
+
+
+        private readonly IAuthService _authService;
+
+        public AccountController(IAuthService authService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _authService = authService;
         }
-
-
         
 
         /// <summary>
@@ -78,15 +89,29 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         /// Attributes : HttpPost, AllowAnonymous
         /// </summary>
         /// <param name="model"><see cref="LoginRegisterViewModel"/> viewmodel that includes Email and Password properties.</param>
-        /// <param name="returnUrl">The url that request comes from. It is automatically added to the querystring when user navigates to the secured url without authenticated.</param>
-        /// <returns></returns>
+        /// <param name="returnUrl">The url that request comes from. It is automatically added to the querystring when user navigates to the secured url with not authenticated status.</param>
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginRegisterViewModel model, string returnUrl)
+        public async Task<IActionResult> Login(LoginRegisterViewModel model, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
+                var result = await _authService.SignInAsync(model.Email, model.Password);
+
+                if(!result.HasError)
+                {
+                    if (!string.IsNullOrWhiteSpace(ReturnUrl) && Url.IsLocalUrl(ReturnUrl))  // against redirect vulnerability and not to show exception page..
+                    {
+                        return Redirect(ReturnUrl);
+                    }
+
+                    return RedirectToAction("index", "home");
+                }
+
+                ModelState.AddModelError("", result.Errors[0]);
+
+                /*
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, true);
 
                 if (result.Succeeded)
@@ -100,6 +125,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
                 }
                 
                 ModelState.AddModelError("", "Invalid username or password!");
+                */
             }
 
             return View(model);
@@ -113,12 +139,13 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         /// <para/>
         /// Attributes : HttpPost
         /// </summary>
-        /// <returns></returns>
 
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
-            await _signInManager.SignOutAsync();
+            //await _signInManager.SignOutAsync();
+
+            await _authService.SignOutAsync();
             return RedirectToAction("index", "home");
         }
 
@@ -152,6 +179,24 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         {
             if (ModelState.IsValid)
             {
+                ApplicationUserDto newUser = new ApplicationUserDto
+                {
+                    Email = model.Email
+                };
+
+                var result = await _authService.RegisterAsync(newUser, model.Password);
+
+                if(!result.HasError)
+                {
+                    return RedirectToAction("index", "home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+
+                /*
                 ApplicationUser newUser = new ApplicationUser
                 {
                     Email = model.Email,
@@ -170,6 +215,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
                 {
                     ModelState.AddModelError("", error.Description);
                 }
+                */
             }
 
             return View("Login", model);
@@ -203,7 +249,9 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> IsEmailFree(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            //var user = await _userManager.FindByEmailAsync(email);
+
+            var user = await _authService.FindUserByEmailAsync(email);
 
             if (user == null)
             {

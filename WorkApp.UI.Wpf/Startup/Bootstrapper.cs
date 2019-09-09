@@ -1,10 +1,7 @@
 ﻿using Autofac;
-using Microsoft.EntityFrameworkCore;
-using WorkApp.Common.Entities;
-using WorkApp.DataAccess.SqlServer;
-using WorkApp.Respository.Interfaces;
-using WorkApp.Respository.Repositories;
-using WorkApp.Service.Interfaces;
+using AutoMapper;
+using WorkApp.Common.Configurations;
+using WorkApp.Service.Extensions;
 using WorkApp.Service.Services;
 using WorkApp.UI.Wpf.Interfaces;
 using WorkApp.UI.Wpf.ViewModel;
@@ -28,24 +25,26 @@ namespace WorkApp.UI.Wpf.Startup
 
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
-
-            builder.RegisterType<AppDbContext>().As<DbContext>();
-            
-            builder.RegisterType<SqlRespository<KanbanBoard>>().As<ICrudRepository<KanbanBoard>>()
-                .WithParameter((p, c) => p.ParameterType == typeof(AppDbContext), (p, c) => new AppDbContextFactory().CreateDbContext(new string[0]));
-            builder.RegisterType<SqlRespository<ToDo>>().As<ICrudRepository<ToDo>>()
-                .WithParameter((p, c) => p.ParameterType == typeof(AppDbContext), (p, c) => new AppDbContextFactory().CreateDbContext(new string[0]));
-            builder.RegisterType<SqlRespository<Note>>().As<ICrudRepository<Note>>()
-                .WithParameter((p, c) => p.ParameterType == typeof(AppDbContext), (p, c) => new AppDbContextFactory().CreateDbContext(new string[0]));
-
-            builder.RegisterType<SqlRespository<DesktopMenu>>().As<ICrudRepository<DesktopMenu>>()
-                .WithParameter((p, c) => p.ParameterType == typeof(AppDbContext), (p, c) => new AppDbContextFactory().CreateDbContext(new string[0]));
-
-
-            builder.RegisterGeneric(typeof(CrudService<>)).As(typeof(ICrudService<>));
-
             builder.RegisterType<DrawerViewModel>().As<IDrawerViewModel>();
             builder.RegisterType<ToDoViewModel>().As<IToDoViewModel>();
+            //builder.RegisterGeneric(typeof(CrudService<>)).As(typeof(ICrudService<>));
+
+            /*
+             * TODO :
+             *      Retrieve these from service layer.
+             *          Implement ConfigurationService in the service layer with these methods
+             *              for AutoMapper implement a method that returns IMapper
+             *              implement a method that returns AppDbContext
+             *              implement a method that returns typeof(SqlRespository<>)
+             *              implement a method that returns new AppDbContextFactory().CreateDbContext(new string[0])
+             *          
+             */
+            builder.Register(x => new AutoMapperConfiguration().Configure().CreateMapper()).As<IMapper>();
+
+            //WpfStartupService startupService = new WpfStartupService();
+            //startupService.ConfigureAppServices(builder);
+
+            builder.AddAppServices();
 
             return builder.Build();
         }

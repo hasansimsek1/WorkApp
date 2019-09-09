@@ -1,149 +1,141 @@
-﻿using System;
+﻿using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
-using WorkApp.Common.Entities;
 using WorkApp.Service.Interfaces;
+using WorkApp.DataAccess.Entities;
+using WorkApp.Respository.Interfaces;
 
 namespace WorkApp.Service.Services
 {
+    /// <summary>
+    /// Service that is consumed by kanban board related UI elements.
+    /// <para/>
+    /// Implements : <see cref="IKanbanBoardService"/>
+    /// </summary>
     public class KanbanBoardService : IKanbanBoardService
     {
-        private readonly ICrudService<KanbanBoard> _kanbanCrudService;
+        private readonly ICrudRepository<KanbanBoard, KanbanBoardDto> _kanbanCrudRepository;
 
-        public KanbanBoardService(ICrudService<KanbanBoard> kanbanCrudService)
+        /// <summary>
+        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudService{KanbanBoard}"/>
+        /// </summary>
+        public KanbanBoardService(ICrudRepository<KanbanBoard, KanbanBoardDto> kanbanCrudRepository)
         {
-            _kanbanCrudService = kanbanCrudService;
+            _kanbanCrudRepository = kanbanCrudRepository;
         }
 
+        /// <summary>
+        /// Adds new kanban board record and retrieves the newly created record.
+        /// </summary>
+        /// <param name="newKanbanDto">Data transfer object form of the <see cref="KanbanBoard"/> entity.</param>
         public async Task<Result<KanbanBoardDto>> AddAsync(KanbanBoardDto newKanbanDto)
         {
-            KanbanBoard newKanbanBoardEntity = new KanbanBoard
-            {
-                Name = newKanbanDto.Name,
-                AddedDate = DateTime.Now,
-                IsDeleted = false,
-                ModifiedDate = DateTime.Now,
-                UserId = newKanbanDto.UserId
-                
-            };
-
-            var result = await _kanbanCrudService.InsertAsync(newKanbanBoardEntity);
-
-            if (result.HasError)
-            {
-                return new Result<KanbanBoardDto> { Data = null, Errors = result.Errors };
-            }
-
-            newKanbanDto.Id = result.Data.Id;
-
-            return new Result<KanbanBoardDto> { Data = newKanbanDto };
+            return await _kanbanCrudRepository.InsertAsync(newKanbanDto);
         }
 
-        public async Task<Result<IEnumerable<KanbanBoardDto>>> GetAllAsync(string userId)
+        /// <summary>
+        /// Retrieves all not deleted kanban board records.
+        /// </summary>
+        public async Task<Result<List<KanbanBoardDto>>> GetAllAsync()
         {
-            var result = await _kanbanCrudService.GetAllAsync();
-
-            if(result.HasError)
-            {
-                return new Result<IEnumerable<KanbanBoardDto>> { Data = null, Errors = result.Errors };
-            }
-
-            if (result.Data != null)
-            {
-                var kanbanDtoList = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).Select(x => new KanbanBoardDto
-                {
-                    AddedDate = x.AddedDate,
-                    Columns = x.Columns,
-                    Id = x.Id,
-                    IsDeleted = x.IsDeleted,
-                    ModifiedDate = x.ModifiedDate,
-                    Name = x.Name,
-                    User = x.User,
-                    UserId = userId
-                });
-
-                return new Result<IEnumerable<KanbanBoardDto>> { Data = kanbanDtoList };
-            }
-            else
-            {
-                return new Result<IEnumerable<KanbanBoardDto>> { Data = null };
-            }
+            return await _kanbanCrudRepository.GetAsync();
         }
 
+        /// <summary>
+        /// Retrieves kanban board record with the specified Id.
+        /// </summary>
+        /// <param name="Id">Id of the kanban board.</param>
         public async Task<Result<KanbanBoardDto>> GetByIdAsync(int Id)
         {
-            var result = await _kanbanCrudService.GetByIdAsync(Id);
-
-            if(result.HasError)
-            {
-                return new Result<KanbanBoardDto> { Data = null, Errors = result.Errors };
-            }
-
-            KanbanBoardDto kanbanBoardDto = new KanbanBoardDto();
-
-            if(result.Data != null)
-            {
-                kanbanBoardDto = new KanbanBoardDto
-                {
-                    AddedDate = result.Data.AddedDate,
-                    Columns = result.Data.Columns,
-                    Id = result.Data.Id,
-                    ModifiedDate = result.Data.ModifiedDate,
-                    Name = result.Data.Name,
-                    UserId = result.Data.UserId
-                };
-            }
-            return new Result<KanbanBoardDto> { Data = kanbanBoardDto };
+            return await _kanbanCrudRepository.GetAsync(Id);
         }
 
-        public async Task<Result<KanbanBoardDto>> GetLastEditedKanbanBoardAsync(string userId)
+        /// <summary>
+        /// Retrieves kanban board records of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<List<KanbanBoardDto>>> GetByUserIdAsync(string userId)
         {
-            var result = await _kanbanCrudService.GetAllAsync();
-
-            if (result.HasError)
-            {
-                return new Result<KanbanBoardDto>()
-                {
-                    Data = null,
-                    Errors = result.Errors
-                };
-            }
-
-            var kanbanBoard = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).OrderByDescending(x => x.ModifiedDate).FirstOrDefault();
-
-            KanbanBoardDto kanbanBoardDto = new KanbanBoardDto();
-            
-            if(kanbanBoard != null)
-            {
-                kanbanBoardDto = new KanbanBoardDto
-                {
-                    Id = kanbanBoard.Id,
-                    Name = kanbanBoard.Name,
-                    AddedDate = kanbanBoard.AddedDate,
-                    ModifiedDate = kanbanBoard.ModifiedDate,
-                    Columns = kanbanBoard.Columns,
-                    IsDeleted = kanbanBoard.IsDeleted,
-                    User = kanbanBoard.User,
-                    UserId = kanbanBoard.UserId
-                };
-            }
-            
-
-            return new Result<KanbanBoardDto>() { Data = kanbanBoardDto };
+            return await _kanbanCrudRepository.GetAsync(x => x.UserId == userId);
         }
 
-        public async Task<Result<int>> GetTotalKanbanBoardCountAsync(string userId)
+        /// <summary>
+        /// Retrieves not deleted total kanban board count.
+        /// </summary>
+        public async Task<Result<int>> GetTotalKanbanBoardCountAsync()
         {
-            var result = await _kanbanCrudService.GetAllAsync();
+            var result = await _kanbanCrudRepository.GetAsync();
 
             if (result.HasError)
             {
                 return new Result<int>() { Data = 0, Errors = result.Errors };
             }
 
-            return new Result<int>() { Data = result.Data.Where(x => x.IsDeleted == false && x.UserId == userId).ToList().Count };
+            return new Result<int>(result.Data.Count);
+        }
+
+        /// <summary>
+        /// Retrieves total kanban board count of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<int>> GetTotalKanbanBoardCountOfUserAsync(string userId)
+        {
+            var result = await _kanbanCrudRepository.GetAsync(x => x.UserId == userId);
+
+            if (result.HasError)
+            {
+                return new Result<int>() { Data = 0, Errors = result.Errors };
+            }
+
+            return new Result<int>(result.Data.Count);
+        }
+
+        /// <summary>
+        /// Retrieves last edited kanban board record of the user.
+        /// </summary>
+        /// <param name="userId">Id of the application user.</param>
+        public async Task<Result<KanbanBoardDto>> GetLastEditedKanbanBoardOfUserAsync(string userId)
+        {
+            var result = await _kanbanCrudRepository.GetAsync(x => x.UserId == userId);
+
+            if (result.HasError)
+            {
+                return new Result<KanbanBoardDto>() { Data = null, Errors = result.Errors };
+            }
+
+            return new Result<KanbanBoardDto>(result.Data.OrderByDescending(x => x.ModifiedDate).FirstOrDefault());
+        }
+
+        /// <summary>
+        /// Updates the kanban board record.
+        /// </summary>
+        public async Task<Result<KanbanBoardDto>> UpdateAsync(KanbanBoardDto kanbanBoardDto)
+        {
+            var result = await _kanbanCrudRepository.UpdateAsync(kanbanBoardDto);
+
+            if(result.HasError)
+            {
+                return new Result<KanbanBoardDto>() { Data = null, Errors = result.Errors };
+            }
+
+            return new Result<KanbanBoardDto>(result.Data);
+        }
+
+        /// <summary>
+        /// Soft-deletes the kanban board record.
+        /// </summary>
+        public async Task<Result<KanbanBoardDto>> DeleteAsync(KanbanBoardDto kanbanBoardDto)
+        {
+            var result = await _kanbanCrudRepository.DeleteAsync(kanbanBoardDto);
+
+            if(result.HasError)
+            {
+                return new Result<KanbanBoardDto>() { Data = null, Errors = result.Errors };
+            }
+
+            return new Result<KanbanBoardDto>(result.Data);
         }
     }
 }

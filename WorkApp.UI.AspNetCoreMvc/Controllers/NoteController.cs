@@ -40,14 +40,13 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
 
 
         /// <summary>
-        /// Gets the note records, belongs to the user, from service layer asynchronously and sends them to the view to be listed.
+        /// Gets the note records, belong to the user, from service layer asynchronously and sends them to the view to be listed.
         /// </summary>
-        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var result = await _noteService.GetAllAsync(userId);
+            var result = await _noteService.GetByUserId(userId);
 
             if(result.HasError)
             {
@@ -67,7 +66,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         /// <para/>
         /// Attributes : HttpGet
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult Add()
         {

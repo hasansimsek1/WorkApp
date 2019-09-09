@@ -54,7 +54,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var result = await _kanbanService.GetAllAsync(userId);
+            var result = await _kanbanService.GetByUserIdAsync(userId);
 
             if (result.HasError)
             {
@@ -71,7 +71,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         /// <para/>
         /// Attributes : HttpGet
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IActionResult Add()
         {
