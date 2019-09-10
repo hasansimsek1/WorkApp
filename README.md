@@ -4,7 +4,7 @@ Simple productivity app that I would like to use on my daily life. It has kanban
 
 It is not ready to use but I will be working on it.
 
-### If you want to get it running, take these steps..
+### If you want to get it running locally, take these steps..
 * This application requires ASP.NET Core 2.2 to be installed on your computer. If not so, please install it from [here](https://dotnet.microsoft.com/download)
 * Get the solution from github (clone or download)
 * Change conntection strings in appsettings.json files in the AspNetCoreMvc and Wpf projects. Note that this application uses Sql Server as its database.
