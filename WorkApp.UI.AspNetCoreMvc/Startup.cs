@@ -2,23 +2,16 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Reflection;
 using WorkApp.Common.Configurations;
 using WorkApp.Service.Extensions;
-using WorkApp.Service.Interfaces;
-using WorkApp.Service.Services;
 
 namespace WorkApp.UI.AspNetCoreMvc
 {
     /// <summary>
-    /// Class that is responsible for running user configurations on the beginning of the application.
+    /// Responsible for running configurations at the beginning of the application.
     /// </summary>
     public class Startup
     {

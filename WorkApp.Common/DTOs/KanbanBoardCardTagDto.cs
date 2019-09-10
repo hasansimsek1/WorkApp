@@ -1,7 +1,9 @@
 ﻿namespace WorkApp.Common.DTOs
 {
     /// <summary>
+    /// 
     /// Data transfer object for the KanbanBoardCardTag entity.
+    /// 
     /// <para/>
     /// 
     /// Inherits from : <see cref="DtoBase"/>

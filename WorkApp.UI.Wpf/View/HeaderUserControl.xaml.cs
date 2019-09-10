@@ -43,6 +43,7 @@ namespace WorkApp.UI.Wpf.View
         private void HideContentButton_Click(object sender, RoutedEventArgs e)
         {
             _areBoxesHidden = !_areBoxesHidden;
+
             Window window = Application.Current.MainWindow;
 
             if (_areBoxesHidden)

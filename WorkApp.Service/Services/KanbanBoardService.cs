@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
@@ -19,7 +18,7 @@ namespace WorkApp.Service.Services
         private readonly ICrudRepository<KanbanBoard, KanbanBoardDto> _kanbanCrudRepository;
 
         /// <summary>
-        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudService{KanbanBoard}"/>
+        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudRepository{TEntity, TDto}"/>
         /// </summary>
         public KanbanBoardService(ICrudRepository<KanbanBoard, KanbanBoardDto> kanbanCrudRepository)
         {
@@ -27,7 +26,7 @@ namespace WorkApp.Service.Services
         }
 
         /// <summary>
-        /// Adds new kanban board record and retrieves the newly created record.
+        /// Adds new kanban board and retrieves the newly created record.
         /// </summary>
         /// <param name="newKanbanDto">Data transfer object form of the <see cref="KanbanBoard"/> entity.</param>
         public async Task<Result<KanbanBoardDto>> AddAsync(KanbanBoardDto newKanbanDto)
@@ -36,7 +35,7 @@ namespace WorkApp.Service.Services
         }
 
         /// <summary>
-        /// Retrieves all not deleted kanban board records.
+        /// Retrieves all kanban board records.
         /// </summary>
         public async Task<Result<List<KanbanBoardDto>>> GetAllAsync()
         {
@@ -62,7 +61,7 @@ namespace WorkApp.Service.Services
         }
 
         /// <summary>
-        /// Retrieves not deleted total kanban board count.
+        /// Retrieves total kanban board count.
         /// </summary>
         public async Task<Result<int>> GetTotalKanbanBoardCountAsync()
         {

@@ -10,10 +10,14 @@ namespace WorkApp.DataAccess.Entities
     /// 
     /// <para/>
     /// 
+    /// Implements : <see cref="IEntity"/>
+    /// 
+    /// <para/>
+    /// 
     /// Properties that <see cref="ApplicationUser"/> extends <see cref="IdentityUser"/> : 
-    /// <para/><see cref="ToDoes"/> (Type = <see cref="ICollection{T}"/> of <see cref="ToDo"/>  (no attribute)
-    /// <para/><see cref="KanbanBoards"/> (Type = <see cref="ICollection{T}"/> of <see cref="KanbanBoard"/> (no attribute)
-    /// <para/><see cref="Notes"/> (Type = <see cref="ICollection{T}"/> of <see cref="Note"/> (no attribute)
+    /// <para/><see cref="ToDoes"/> (Type = <see cref="ICollection{TEntity}"/> of <see cref="ToDo"/>  (no attribute)
+    /// <para/><see cref="KanbanBoards"/> (Type = <see cref="ICollection{TEntity}"/> of <see cref="KanbanBoard"/> (no attribute)
+    /// <para/><see cref="Notes"/> (Type = <see cref="ICollection{TEntity}"/> of <see cref="Note"/> (no attribute)
     /// 
     /// </summary>
 

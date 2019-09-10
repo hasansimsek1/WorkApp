@@ -4,6 +4,9 @@ using WorkApp.DataAccess.Interfaces;
 
 namespace WorkApp.Common.Extensions
 {
+    /// <summary>
+    /// Manual entity-dto mapping operations.
+    /// </summary>
     public static class EntityExtensions
     {
         /*

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 namespace WorkApp.Common.DTOs
 {
     /// <summary>
+    /// 
     /// Data transfer object for the Tag entity.
+    /// 
     /// <para/>
     /// 
     /// Inherits from : <see cref="DtoBase"/>

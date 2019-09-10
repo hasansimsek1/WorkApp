@@ -16,7 +16,7 @@ namespace WorkApp.UI.AspNetCoreMvc.ViewModels
         /// </summary>
         [Required]
         [EmailAddress]
-        //[Remote(action: "IsEmailFree", controller: "Account")]  // see Account/IsEmailFree action for details
+        //[Remote(action: "IsEmailFree", controller: "Account")]  // For remote validation (see Account/IsEmailFree action for details)
         public string Email { get; set; }
 
         /// <summary>

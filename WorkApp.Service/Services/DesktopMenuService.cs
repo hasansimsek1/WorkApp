@@ -9,6 +9,9 @@ using WorkApp.Service.Interfaces;
 
 namespace WorkApp.Service.Services
 {
+    /// <summary>
+    /// Implementation of <see cref="IDesktopMenuService"/>
+    /// </summary>
     public class DesktopMenuService : IDesktopMenuService
     {
         private readonly ICrudRepository<DesktopMenu, DesktopMenuDto> _desktopMenuRepository;
@@ -18,6 +21,9 @@ namespace WorkApp.Service.Services
             _desktopMenuRepository = crudRepository;
         }
 
+        /// <summary>
+        /// Retrieves menu items that will be shown on the desktop application.
+        /// </summary>
         public async Task<Result<List<DesktopMenuDto>>> GetDesktopMenuItemsAsync()
         {
             return await _desktopMenuRepository.GetAsync();

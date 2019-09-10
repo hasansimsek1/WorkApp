@@ -9,8 +9,14 @@ using WorkApp.Service.Services;
 
 namespace WorkApp.Service.Extensions
 {
+    /// <summary>
+    /// Extensions for the Autofac library.
+    /// </summary>
     public static class AutofacExtensions
     {
+        /// <summary>
+        /// Registers application services to Autofac container.
+        /// </summary>
         public static void AddAppServices(this ContainerBuilder builder)
         {
             builder.RegisterType<AppDbContext>().As<DbContext>();
@@ -21,8 +27,7 @@ namespace WorkApp.Service.Extensions
 
             builder.RegisterGeneric(typeof(SqlRespository<,>)).As(typeof(ICrudRepository<,>))
                 .WithParameter((p, c) => p.ParameterType == typeof(AppDbContext), (p, c) => new AppDbContextFactory().CreateDbContext(new string[0]));
-
-
+            
             builder.RegisterGeneric(typeof(UserManager<>)).AsSelf();
             builder.RegisterGeneric(typeof(SignInManager<>)).AsSelf();
         }

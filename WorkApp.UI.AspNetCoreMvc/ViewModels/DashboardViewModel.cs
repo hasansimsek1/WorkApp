@@ -10,7 +10,7 @@ namespace WorkApp.UI.AspNetCoreMvc.ViewModels
     public class DashboardViewModel
     {
         /// <summary>
-        /// Total count of kanban boards that belong to the user.
+        /// Total count of kanban boards of the user.
         /// </summary>
         public int TotalKanbanBoardCount { get; set; }
 

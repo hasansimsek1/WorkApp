@@ -21,13 +21,11 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     {
         /*
          * TODO : 
-         *      Think about centralized error pages. This logic has some issues now..
+         *      Think about centralized error pages. This logic has some issues for now..
          */
 
-
-
         /// <summary>
-        /// Gets the error code with statusCode parameter, switches on statusCode parameter and fills the ViewBag.ErrorMessage with the appropriate error mesaage, then sends the "NotFound" view to the client.
+        /// Switches on statusCode parameter and fills the ViewBag.ErrorMessage with the appropriate error mesaage, then sends the "NotFound" view to the client.
         /// </summary>
         /// <param name="statusCode">Status code of the http error that occured.</param>
         [Route("Error/{statusCode}")]

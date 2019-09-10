@@ -6,9 +6,11 @@ namespace WorkApp.Common.DTOs
 {
     /// <summary>
     /// Base class for DTO classes that reflects <see cref="EntityBase"/>.
+    /// 
     /// <para/>
     /// 
-    /// Implements : <see cref="IDto"/>
+    /// Implements : <see cref="IDtoWithCommonProperties"/>
+    /// 
     /// <para/>
     /// 
     /// Properties :
@@ -21,22 +23,22 @@ namespace WorkApp.Common.DTOs
     public class DtoBase : IDtoWithCommonProperties
     {
         /// <summary>
-        /// Id of the related entity. Initialized with auto-property initializer with value of 0
+        /// Id of the related entity. Initializes with auto-property initializer with value of 0
         /// </summary>
         public int Id { get; set; } = 0;
 
         /// <summary>
-        /// Creation date of the related entity. Initialized with auto-property initializer with value of <see cref="DateTime.Now"/>
+        /// Creation date of the related entity. Initializes with auto-property initializer with value of <see cref="DateTime.Now"/>
         /// </summary>
         public DateTime AddedDate { get; set; } = DateTime.Now;
 
         /// <summary>
-        /// Modification date of the related entity. Initialized with auto-property initializer with value of <see cref="DateTime.Now"/>
+        /// Modification date of the related entity. Initializes with auto-property initializer with value of <see cref="DateTime.Now"/>
         /// </summary>
         public DateTime ModifiedDate { get; set; } = DateTime.Now;
 
         /// <summary>
-        /// Soft-delete operation status of the related entity. Initialized with auto-property initializer with value of <see cref="false"/>
+        /// Soft-delete operation status of the related entity. Initializes with auto-property initializer with value of <see cref="false"/>
         /// </summary>
         public bool IsDeleted { get; set; } = false;
     }

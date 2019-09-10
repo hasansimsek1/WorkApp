@@ -2,26 +2,24 @@
 using System.Windows.Controls;
 using WorkApp.UI.Wpf.ViewModel;
 
-/// <summary>
-/// 
-/// </summary>
+
 namespace WorkApp.UI.Wpf
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml. 
-    /// UI related work in MainWindow is done in this class (like SizeChanged event handler)
+    /// UI related logic in MainWindow is done in this class (like SizeChanged event handler)
     /// </summary>
     public partial class MainWindow : Window
     {
         private MainViewModel _viewModel;
 
         /// <summary>
-        /// Being used by the drawer component of wpf material library to determine the open/close state of the drawer.
+        /// Being used by the drawer component of WPF material library to determine the open/close state of the drawer.
         /// </summary>
         public bool IsChecked { get; set; }
 
         /// <summary>
-        /// Binds the viewmodel parameter to its DataContext and runs the LoadAsync method of the incoming viewmodel.
+        /// Binds the viewmodel parameter to its data context and runs the LoadAsync method of the incoming viewmodel.
         /// </summary>
         /// <param name="viewModel">A viewmodel class that will be bound to DataContext of the MainWindow. Dependency injector injects the related class automatically at runtime.</param>
         public MainWindow(MainViewModel viewModel)

@@ -5,7 +5,7 @@ using WorkApp.DataAccess.Interfaces;
 namespace WorkApp.Respository.Interfaces
 {
     /// <summary>
-    /// Base criterias of the generic repositories.
+    /// Base criterias of generic repositories.
     /// </summary>
     public interface IGenericRepository<TEntity, TDto> : IRepository
         where TDto : class, IDto 

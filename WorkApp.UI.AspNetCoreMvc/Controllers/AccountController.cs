@@ -9,7 +9,7 @@ using WorkApp.UI.AspNetCoreMvc.ViewModels;
 namespace WorkApp.UI.AspNetCoreMvc.Controllers
 {
     /// <summary>
-    /// Asp.Net Core controller to execute authentication and authorization logic.
+    /// Asp.Net Core controller that respond to authentication and authorization requests.
     /// Identity Core is used for membership mechanism in this app.
     /// 
     /// <para/>
@@ -18,13 +18,12 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     /// 
     /// <para/>
     /// 
-    /// Inherits from : <see cref="Controller"/>
+    /// Inherits from : <see cref="BaseController"/>
     /// 
     /// <para/>
     /// 
-    /// Dependencies that are injected via constructor : 
-    /// <see cref="UserManager{TUser}"/> , 
-    /// <see cref="SignInManager{TUser}"/>
+    /// Dependencies : 
+    /// <see cref="IAuthService"/> 
     /// 
     /// <para/>
     /// 
@@ -35,40 +34,22 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     /// <para/><see cref="LogOut"/> (Attributes : HttpPost),
     /// <para/><see cref="AccessDenied"/> (Attributes : HttpGet, AllowAnonymous)
     /// 
-    /// 
     /// </summary>
-
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-
-
-        //private readonly UserManager<ApplicationUser> _userManager;
-        //private readonly SignInManager<ApplicationUser> _signInManager;
-
-        //public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-        //{
-        //    _userManager = userManager;
-        //    _signInManager = signInManager;
-        //}
-
-
-
-
         private readonly IAuthService _authService;
 
         public AccountController(IAuthService authService)
         {
             _authService = authService;
         }
-        
 
         /// <summary>
         /// HttpGet login action that just sends the Login view to the client. 
         /// <para/>
         /// Attributes : HttpGet, AllowAnonymous
         /// </summary>
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -76,21 +57,15 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             return View();
         }
 
-
-
-
         /// <summary>
         /// HttpPost action for signing the user in. 
-        /// It validates the model parameter, 
-        /// signs the user in with  PasswordSignInAsync method of the SignInManager, 
-        /// redirects request to home/index url,
-        /// if errors occur in the PasswordSignInAsync method, adds errors to ModelState and returns the view again.
+        /// On a successful sign in, redirects request to home/index url,
+        /// if errors occur, adds errors to ModelState and returns the view again.
         /// <para/>
         /// Attributes : HttpPost, AllowAnonymous
         /// </summary>
-        /// <param name="model"><see cref="LoginRegisterViewModel"/> viewmodel that includes Email and Password properties.</param>
-        /// <param name="returnUrl">The url that request comes from. It is automatically added to the querystring when user navigates to the secured url with not authenticated status.</param>
-
+        /// <param name="model"><see cref="LoginRegisterViewModel"/>Viewmodel that includes Email and Password properties.</param>
+        /// <param name="returnUrl">The url that request comes from. It is automatically added to the querystring when user navigates to the secured url without an authenticated status.</param>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginRegisterViewModel model, string ReturnUrl)
@@ -110,69 +85,27 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
                 }
 
                 ModelState.AddModelError("", result.Errors[0]);
-
-                /*
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, true, true);
-
-                if (result.Succeeded)
-                {
-                    if(!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))  // against redirect vulnerability and not to show exception page..
-                    {
-                        return Redirect(returnUrl);
-                    }
-
-                    return RedirectToAction("index", "home");
-                }
-                
-                ModelState.AddModelError("", "Invalid username or password!");
-                */
             }
 
             return View(model);
         }
-
-
-
-
+        
         /// <summary>
-        /// HttpPost action for logging the user out. It calls the SignOutAsync method of the SignInManager. After logging the user out, it redirects the request to /Home/Index.
+        /// HttpPost action for signing the user out. On a successful logout, it redirects the request to /Home/Index.
         /// <para/>
         /// Attributes : HttpPost
         /// </summary>
-
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
-            //await _signInManager.SignOutAsync();
-
             await _authService.SignOutAsync();
             return RedirectToAction("index", "home");
         }
-
-
-
-
-        // tried something different in the summary area but it is very bad idea!!
+        
         /// <summary>
         /// HttpPost action for registering new user. Applied attributes are : HttpPost, AllowAnonymous
-        /// 
-        /// <para/>
-        /// 
-        /// Codes : <para/>
-        ///     <para/>if (ModelState.IsValid) {
-        ///     <para/>    ApplicationUser newUser = new ApplicationUser { Email = model.Email, UserName = model.Email };
-        ///     <para/>    var result = await _userManager.CreateAsync(newUser, model.Password);
-        ///     <para/>    if (result.Succeeded) {
-        ///     <para/>        await _signInManager.SignInAsync(newUser, false);
-        ///     <para/>        return RedirectToAction("index", "home");
-        ///     <para/>    }
-        ///     <para/>    foreach (var error in result.Errors) { ModelState.AddModelError("", error.Description); }
-        ///     <para/>}
-        ///     <para/>return View("Login", model);
-        /// 
         /// </summary>
-        /// <param name="model">I used the same viewmodel for login and register for simplicity. I hope I can have time to fix this.. <see cref="LoginRegisterViewModel"/></param>
-
+        /// <param name="model">I used the same viewmodel for login and register for easiness. I hope I find time to fix this.. <see cref="LoginRegisterViewModel"/></param>
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register(LoginRegisterViewModel model)
@@ -195,50 +128,23 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
                 {
                     ModelState.AddModelError("", error);
                 }
-
-                /*
-                ApplicationUser newUser = new ApplicationUser
-                {
-                    Email = model.Email,
-                    UserName = model.Email
-                };
-
-                var result = await _userManager.CreateAsync(newUser, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(newUser, false);
-                    return RedirectToAction("index", "home");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-                */
             }
 
             return View("Login", model);
         }
-
-
-
-
+        
         /// <summary>
         /// Returns the AccessDenied view.
         /// <para/>
         /// Attributes : HttpGet, AllowAnonymous
         /// </summary>
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult AccessDenied()
         {
             return View();
         }
-
-
-
+        
         /// <summary>
         /// Example code for remote validation. Asp.net core uses JQuery for remote validation in the client-side.
         /// We should put [Remote(action:"IsEmailFree", controller:"Account")] attribute to the property in the related viewmodel.
@@ -249,8 +155,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> IsEmailFree(string email)
         {
-            //var user = await _userManager.FindByEmailAsync(email);
-
             var user = await _authService.FindUserByEmailAsync(email);
 
             if (user == null)

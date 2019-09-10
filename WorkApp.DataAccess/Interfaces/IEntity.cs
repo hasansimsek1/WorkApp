@@ -5,10 +5,9 @@ using System.Text;
 namespace WorkApp.DataAccess.Interfaces
 {
     /// <summary>
-    /// Base interface to entities.
+    /// Base interface for entities.
     /// </summary>
     public interface IEntity
     {
-
     }
 }

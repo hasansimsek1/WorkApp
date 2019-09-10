@@ -3,7 +3,7 @@
 namespace WorkApp.UI.Wpf.Model
 {
     /// <summary>
-    /// Data transfer object of the ToDo entity that is bound to user interface. 
+    /// Data transfer object of the ToDo entity that is bound to WPF user interface. 
     /// Inherits from ViewModelBase class that implements INotifyPropertyChanged interface.
     /// </summary>
     public class ToDoBindingModel : ViewModelBase

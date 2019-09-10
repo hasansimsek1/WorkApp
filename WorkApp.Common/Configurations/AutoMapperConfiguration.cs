@@ -4,6 +4,9 @@ using WorkApp.DataAccess.Entities;
 
 namespace WorkApp.Common.Configurations
 {
+    /// <summary>
+    /// Configurations for AutoMapper.
+    /// </summary>
     public class AutoMapperConfiguration
     {
         public MapperConfiguration Configure()
@@ -17,6 +20,9 @@ namespace WorkApp.Common.Configurations
         }
     }
 
+    /// <summary>
+    /// Profile for AutoMapper
+    /// </summary>
     public class AutoMapperMappings : Profile
     {
         public AutoMapperMappings()

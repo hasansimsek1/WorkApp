@@ -5,6 +5,7 @@ namespace WorkApp.DataAccess.Entities
 {
     /// <summary>
     /// Tag entity that is being used by the persistence mechanism.
+    /// 
     /// <para/>
     /// 
     /// Inherits from : <see cref="EntityBase"/>

@@ -7,8 +7,15 @@ using System.IO;
 namespace WorkApp.DataAccess.SqlServer
 {
     /// <summary>
-    /// Architecture of this project needs to implement IDesignTimeDbContextFactory. For more information :
-    /// https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dbcontext-creation
+    /// Architecture of this project needs to implement IDesignTimeDbContextFactory. 
+    /// 
+    /// <para/>
+    /// 
+    /// For more information you can visit
+    /// <a cref="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dbcontext-creation">
+    /// EF Core design-time DbContext creation on docs.microsoft.com
+    /// </a>
+    /// 
     /// </summary>
     public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
     {

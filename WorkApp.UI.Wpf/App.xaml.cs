@@ -2,15 +2,13 @@
 using System.Windows;
 using WorkApp.UI.Wpf.Startup;
 
-/// <summary>
-/// 
-/// </summary>
+
 namespace WorkApp.UI.Wpf
 {
     public partial class App : Application
     {
         /// <summary>
-        /// Beginning of the app that fires MainWindow. 
+        /// Beginning of the WPF app that fires MainWindow. 
         /// Also dependency resolver runs in this method.
         /// </summary>
         private void Application_Startup(object sender, StartupEventArgs e)

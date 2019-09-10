@@ -7,9 +7,13 @@ namespace WorkApp.UI.Wpf.ViewModel
     /// <summary>
     /// Viewmodel that is bound to the MainWindow.
     /// Responsible for initializing sub-viewmodels for the MainWindow. 
-    /// Used sub-viewmodels are : <para/>
+    /// 
+    /// <para/>
+    /// 
+    /// Used sub-viewmodels : 
     /// DrawerViewModel, 
     /// ToDoViewModel
+    /// 
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
@@ -27,7 +31,7 @@ namespace WorkApp.UI.Wpf.ViewModel
         }
 
         /// <summary>
-        /// This method loads the relevant methods of the sub-viewmodels. These are DrawerViewModel.LoadAsync(), ToDoViewModel.LoadAsync()
+        /// Loads the relevant methods of the sub-viewmodels. These are DrawerViewModel.LoadAsync(), ToDoViewModel.LoadAsync()
         /// </summary>
         public async Task LoadAsync()
         {

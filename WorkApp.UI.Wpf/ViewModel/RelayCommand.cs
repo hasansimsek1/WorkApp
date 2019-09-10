@@ -16,7 +16,7 @@ namespace WorkApp.UI.Wpf.ViewModel
         /// <summary>
         /// Initializes a new instance of <see cref="DelegateCommand{T}"/>.
         /// </summary>
-        /// <param name="execute">Delegate to execute when Execute is called on the command.  This can be null to just hook up a CanExecute delegate.</param>
+        /// <param name="execute">Delegate to execute when Execute is called on the command. This can be null to just hook up a CanExecute delegate.</param>
         /// <remarks><seealso cref="CanExecute"/> will always return true.</remarks>
         public RelayCommand(Action<T> execute)
             : this(execute, null)
@@ -41,9 +41,9 @@ namespace WorkApp.UI.Wpf.ViewModel
         ///<summary>
         ///Defines the method that determines whether the command can execute in its current state.
         ///</summary>
-        ///<param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
+        ///<param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to null.</param>
         ///<returns>
-        ///true if this command can be executed; otherwise, false.
+        ///true if this command can be executed, otherwise, false.
         ///</returns>
         public bool CanExecute(object parameter)
         {

@@ -78,7 +78,7 @@ namespace WorkApp.Service.Interfaces
         Task<Result<ToDoDto>> AddAsync(ToDoDto newToDoDto);
 
         /// <summary>
-        /// Upte the todo.
+        /// Update the todo.
         /// </summary>
         Task<Result<ToDoDto>> UpdateAsync(ToDoDto toDoDto);
     }

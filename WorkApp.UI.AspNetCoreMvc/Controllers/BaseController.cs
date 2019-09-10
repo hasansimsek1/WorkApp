@@ -4,12 +4,13 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
 {
     /// <summary>
     /// A base controller that inherits from Asp.Net Core controller.
-    /// Commonly used codes in the controllers should be taken here to make it DRY.
+    /// Commonly used logics in the controllers should be taken here to make it DRY.
     /// 
     /// <para/>
     /// Inherits from : Controller
     /// 
     /// <para/>
+    /// 
     /// Actions :
     /// <para/>RedirectToError(string errorMessage = null)  (no attributes)
     /// 

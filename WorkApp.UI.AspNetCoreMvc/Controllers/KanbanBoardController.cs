@@ -9,7 +9,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
 {
     /// <summary>
     /// Controller that backs kanban board related views.
-    /// It serves the logic related to kanban board pages.
     /// 
     /// <para/>
     /// 
@@ -36,7 +35,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     {
         private readonly IKanbanBoardService _kanbanService;
 
-
         /// <summary>
         /// Constructor for getting dependency injection. Dependencies : <see cref="IKanbanBoardService"/>
         /// </summary>
@@ -45,10 +43,8 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             _kanbanService = kanbanService;
         }
 
-
-
         /// <summary>
-        /// Gets all kanban board records that belong to the user from service layer asynchronously and sends the data to the Index view.
+        /// Retrieves all kanban board records of the user from service layer asynchronously and sends the data to the Index view.
         /// </summary>
         public async Task<IActionResult> Index()
         {
@@ -64,10 +60,8 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             return View(result.Data);
         }
 
-
-
         /// <summary>
-        /// Just returns the Add view to the client.
+        /// Returns the Add view to the client.
         /// <para/>
         /// Attributes : HttpGet
         /// </summary>
@@ -77,15 +71,9 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             return View();
         }
 
-
-
         /// <summary>
-        /// Gets the data from the user via <see cref="KanbanBoardDto"/> viewmodel, 
-        /// validates the incoming model, 
-        /// adds UserId to the model, 
-        /// sends the data to service layer to be added,
-        /// redirects the request to the /KanbanBoard/Index.
-        /// If error occures while adding new kanban board to the database, adds the error to the ModelState and returns the view again.
+        /// Adds new kanban board to the user.
+        /// If error occurs during the adding process, adds the error to the ModelState and returns the view again.
         /// 
         /// <para/>
         /// Attributes : HttpPost

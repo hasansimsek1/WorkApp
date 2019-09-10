@@ -2,9 +2,11 @@
 {
     /// <summary>
     /// Data transfer object for the DesktopMenu entity.
+    /// 
     /// <para/>
     /// 
     /// Inherits from : <see cref="DtoBase"/>
+    /// 
     /// <para/>
     /// 
     /// Properties :

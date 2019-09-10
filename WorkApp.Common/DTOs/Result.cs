@@ -6,11 +6,15 @@ using WorkApp.Common.Interfaces;
 
 namespace WorkApp.Common.DTOs
 {
+    /// <summary>
+    /// Base return type of operations in the application.
+    /// </summary>
+    /// <typeparam name="T">Type of the data that will return from operation.</typeparam>
     public class Result<T> : IResult<T>
     {
         /*
          * TODO : 
-         *      Take error related logic to a new type like ErrorResult that inherits from this class.
+         *      Specialize success and error results by taking related logic to new types like ErrorResult that inherits from this class.
          */
 
         public Result()

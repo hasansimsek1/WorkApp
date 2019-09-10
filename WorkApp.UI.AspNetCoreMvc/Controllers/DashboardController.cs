@@ -11,7 +11,7 @@ using WorkApp.UI.AspNetCoreMvc.ViewModels;
 namespace WorkApp.UI.AspNetCoreMvc.Controllers
 {
     /// <summary>
-    /// Controller for managing the logic of the dashboard UI.
+    /// Controller for managing the requests comming from dashboard UI.
     /// 
     /// <para/>
     /// 
@@ -25,7 +25,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     /// 
     /// <para/>
     /// 
-    /// Dependencies that are injected via constructor : 
+    /// Dependencies : 
     /// <see cref="IToDoService"/>,
     /// <see cref="IKanbanBoardService"/>,
     /// <see cref="INoteService"/>
@@ -35,19 +35,13 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     /// Actions : 
     /// <para/><see cref="Index"/> (Attributes : not attribute)
     /// 
-    /// 
     /// </summary>
-    /// 
-
     [Authorize]
     public class DashboardController : BaseController
     {
         private readonly IToDoService _toDoService;
         private readonly IKanbanBoardService _kanbanBoardService;
         private readonly INoteService _noteService;
-        
-
-
 
         /// <summary>
         /// Constructor for accepting dependency injection. Dependencies are : 
@@ -55,7 +49,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         /// <see cref="IKanbanBoardService"/>, 
         /// <see cref="INoteService"/>
         /// </summary>
-        
         public DashboardController(
             IToDoService toDoService,
             IKanbanBoardService kanbanBoardService,
@@ -68,21 +61,16 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
             
         }
 
-
-
-
         /// <summary>
         /// HttpGet action that gets records from service layer and sends Index view to the client with a <see cref="DashboardViewModel"/> object.
         /// </summary>
-        
         public async Task<IActionResult> Index()
         {
             /*
-             * TODO : decide what to do when services return error
+             * TODO : what to do when services return error?
              * 
              */
-
-
+             
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var totalKanbanBoardsCountResult = await _kanbanBoardService.GetTotalKanbanBoardCountOfUserAsync(userId);

@@ -11,7 +11,7 @@ namespace WorkApp.UI.AspNetCoreMvc
         }
 
         /// <summary>
-        /// Default webhost builder method that comes with project creation.
+        /// Default webhost builder that comes with project creation.
         /// </summary>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) => WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
     }

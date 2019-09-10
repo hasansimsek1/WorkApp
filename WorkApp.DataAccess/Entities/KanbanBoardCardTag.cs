@@ -6,6 +6,7 @@ namespace WorkApp.DataAccess.Entities
     /// <summary>
     /// KanbanBoardCardTag entity that is being used by the persistence mechanism.
     /// It is a "join class" between KanbanBoardCard and Tag entities to abstract many-to-many relationship between these two tables.
+    /// 
     /// <para/>
     /// 
     /// Inherits from : <see cref="EntityBase"/>

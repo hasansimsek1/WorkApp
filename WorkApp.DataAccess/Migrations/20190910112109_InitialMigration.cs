@@ -369,11 +369,11 @@ namespace WorkApp.DataAccess.Migrations
                 columns: new[] { "Id", "AddedDate", "IsDeleted", "IsVisible", "ModifiedDate", "Name", "Order" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(1029), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(2859), "Dashboard", 0 },
-                    { 2, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4214), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4235), "Kanban", 0 },
-                    { 3, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4254), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4256), "Notes", 0 },
-                    { 4, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4260), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4261), "ToDoes", 0 },
-                    { 5, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4264), false, true, new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4265), "Settings", 0 }
+                    { 1, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), false, true, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), "Dashboard", 0 },
+                    { 2, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), false, true, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), "Kanban", 0 },
+                    { 3, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), false, true, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), "Notes", 0 },
+                    { 4, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), false, true, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), "ToDoes", 0 },
+                    { 5, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), false, true, new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319), "Settings", 0 }
                 });
 
             migrationBuilder.CreateIndex(

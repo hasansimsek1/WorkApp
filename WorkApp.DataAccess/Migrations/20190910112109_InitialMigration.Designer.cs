@@ -10,7 +10,7 @@ using WorkApp.DataAccess.SqlServer;
 namespace WorkApp.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20190908235019_InitialMigration")]
+    [Migration("20190910112109_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -213,50 +213,50 @@ namespace WorkApp.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(1029),
+                            AddedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(2859),
+                            ModifiedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             Name = "Dashboard",
                             Order = 0
                         },
                         new
                         {
                             Id = 2,
-                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4214),
+                            AddedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4235),
+                            ModifiedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             Name = "Kanban",
                             Order = 0
                         },
                         new
                         {
                             Id = 3,
-                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4254),
+                            AddedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4256),
+                            ModifiedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             Name = "Notes",
                             Order = 0
                         },
                         new
                         {
                             Id = 4,
-                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4260),
+                            AddedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4261),
+                            ModifiedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             Name = "ToDoes",
                             Order = 0
                         },
                         new
                         {
                             Id = 5,
-                            AddedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4264),
+                            AddedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             IsDeleted = false,
                             IsVisible = true,
-                            ModifiedDate = new DateTime(2019, 9, 9, 2, 50, 19, 427, DateTimeKind.Local).AddTicks(4265),
+                            ModifiedDate = new DateTime(2019, 9, 10, 14, 21, 9, 124, DateTimeKind.Local).AddTicks(8319),
                             Name = "Settings",
                             Order = 0
                         });

@@ -5,7 +5,13 @@ namespace WorkApp.Common.DTOs
 {
     /// <summary>
     /// Data transfer object for the ApplicationUser entity.
+    /// 
     /// <para/>
+    /// 
+    /// Implements : <see cref="IDto"/>
+    /// 
+    /// <para/>
+    /// 
     /// Properties :
     /// <para/><see cref="Id"/>             <see cref="string"/> (no attributes)
     /// <para/><see cref="Email"/>          <see cref="string"/> (no attributes)
@@ -13,6 +19,7 @@ namespace WorkApp.Common.DTOs
     /// <para/><see cref="ToDoes"/>         <see cref="ICollection{ToDoDto}"/> (no attributes)
     /// <para/><see cref="KanbanBoards"/>   <see cref="ICollection{KanbanBoardDto}"/> (no attributes)
     /// <para/><see cref="Notes"/>          <see cref="ICollection{NoteDto}"/> (no attributes)
+    /// 
     /// </summary>
     public class ApplicationUserDto : IDto
     {
@@ -46,8 +53,14 @@ namespace WorkApp.Common.DTOs
         /// </summary>
         public ICollection<NoteDto> Notes { get; set; }
 
+        /// <summary>
+        /// Username of the appliction user. (Email for this app)
+        /// </summary>
         public string UserName { get; set; }
 
+        /// <summary>
+        /// Password phrase that comes on user registration and sign in processes.
+        /// </summary>
         public string Password { get; set; }
     }
 }

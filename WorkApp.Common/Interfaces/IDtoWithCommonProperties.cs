@@ -2,6 +2,9 @@
 
 namespace WorkApp.Common.Interfaces
 {
+    /// <summary>
+    /// Contract for data transfer objects about containing common properties.
+    /// </summary>
     public interface IDtoWithCommonProperties : IDto
     {
         /// <summary>
@@ -15,7 +18,7 @@ namespace WorkApp.Common.Interfaces
         DateTime AddedDate { get; set; }
 
         /// <summary>
-        /// Modified date of the related entity.
+        /// Modification date of the related entity.
         /// </summary>
         DateTime ModifiedDate { get; set; }
 

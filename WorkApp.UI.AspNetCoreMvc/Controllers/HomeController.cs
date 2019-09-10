@@ -6,7 +6,7 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     /// Controller that responds to the root url.
     /// 
     /// <para/>
-    /// Inherits from : <see cref="Controller"/>
+    /// Inherits from : <see cref="BaseController"/>
     /// 
     /// <para/>
     /// Attributes : no attribute
@@ -17,12 +17,11 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     /// <para/><see cref="Index"/> (Attributes : no attribute)
     /// 
     /// </summary>
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-
         /// <summary>
         /// Index action of the Home controller. 
-        /// Just checks for if the comming request is authenticated and redirects the request according to the authentication status.
+        /// Checks if the comming request is authenticated and redirects the request according to the authentication status.
         /// </summary>
         public IActionResult Index()
         {

@@ -18,15 +18,14 @@ namespace WorkApp.Service.Services
     public class NoteService : INoteService
     {
         private readonly ICrudRepository<Note, NoteDto> _noteCrudRepository;
-        private readonly IMapper _mapper;
 
         /// <summary>
-        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudService{T}"/>
+        /// Constructor for getting dependency injection. Dependencies : 
+        /// <see cref="ICrudRepository{TEntity, TDto}"/>
         /// </summary>
-        public NoteService(ICrudRepository<Note, NoteDto> noteCrudRepository, IMapper mapper)
+        public NoteService(ICrudRepository<Note, NoteDto> noteCrudRepository)
         {
             _noteCrudRepository = noteCrudRepository;
-            _mapper = mapper;
         }
 
         /// <summary>

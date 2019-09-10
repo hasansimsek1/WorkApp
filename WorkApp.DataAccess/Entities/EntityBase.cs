@@ -5,9 +5,10 @@ namespace WorkApp.DataAccess.Entities
 {
     /// <summary>
     /// Base class for the common properties of the entities.
+    /// 
     /// <para/>
     /// 
-    /// Implements : <see cref="IEntity"/>
+    /// Implements : <see cref="IEntityWithCommonProperties"/>
     /// <para/>
     /// 
     /// Properties :

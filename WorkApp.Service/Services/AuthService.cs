@@ -6,6 +6,9 @@ using WorkApp.Service.Interfaces;
 
 namespace WorkApp.Service.Services
 {
+    /// <summary>
+    /// Authentication and authorization service that uses the Identity Core membership system.
+    /// </summary>
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser>   _userManager;
@@ -17,6 +20,11 @@ namespace WorkApp.Service.Services
             _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// Signs the user in when given credentials are true.
+        /// </summary>
+        /// <param name="email">Username of the user. For this application email.</param>
+        /// <param name="password">Password of the user.</param>
         public async Task<Result<string>> SignInAsync(string email, string password)
         {
             var singInResult = await _signInManager.PasswordSignInAsync(email, password, true, true);
@@ -45,23 +53,30 @@ namespace WorkApp.Service.Services
                 {
                     // send confirmation sms or something else..
 
-
-                    var twoFactorResult = new Result<string>("An sms has sent to your phone number!");
-                    twoFactorResult.Errors.Add("An sms has sent to your phone number!");
+                    var twoFactorResult = new Result<string>("A sms has sent to your phone number!");
+                    twoFactorResult.Errors.Add("A sms has sent to your phone number!");
                     return twoFactorResult;
                 }
 
-                var result = new Result<string>("Some thing went wrong while loggin you in :( Maybe trying again can help..");
-                result.Errors.Add("Some thing went wrong while loggin you in :( Maybe trying again can help..");
+                var result = new Result<string>("Invalid username or password!");
+                result.Errors.Add("Invalid username or password");
                 return result;
             }
         }
 
+        /// <summary>
+        /// Signs the user out.
+        /// </summary>
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
         }
 
+        /// <summary>
+        /// Registers new user with the given <see cref="ApplicationUserDto"/> model.
+        /// </summary>
+        /// <param name="newUserDto">Data transfer object of the application user.</param>
+        /// <param name="password">Password that user typed.</param>
         public async Task<Result<ApplicationUserDto>> RegisterAsync(ApplicationUserDto newUserDto, string password)
         {
             ApplicationUser newUser = new ApplicationUser
@@ -89,6 +104,10 @@ namespace WorkApp.Service.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves the application user with given email.
+        /// </summary>
+        /// <param name="email">Email of the user.</param>
         public async Task<Result<ApplicationUserDto>> FindUserByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);

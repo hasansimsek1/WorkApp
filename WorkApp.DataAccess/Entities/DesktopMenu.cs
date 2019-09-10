@@ -7,6 +7,7 @@ namespace WorkApp.DataAccess.Entities
     /// <para/>
     /// 
     /// Inherits from : <see cref="EntityBase"/>
+    /// 
     /// <para/>
     /// 
     /// Properties :

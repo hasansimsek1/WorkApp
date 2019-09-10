@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Common.DTOs;
 using WorkApp.Respository.Interfaces;
 using WorkApp.DataAccess.Entities;
 using WorkApp.Service.Interfaces;
-using AutoMapper;
 using System.Linq.Expressions;
 
 namespace WorkApp.Service.Services
@@ -19,16 +17,13 @@ namespace WorkApp.Service.Services
     public class ToDoService : IToDoService
     {
         private readonly ICrudRepository<ToDo, ToDoDto> _toDoRepository;
-        private readonly IMapper _mapper;
-
 
         /// <summary>
-        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudService{ToDo}"/>
+        /// Constructor for getting dependency injection. Dependencies : <see cref="ICrudRepository{TEntity, TDto}"/>
         /// </summary>
-        public ToDoService(ICrudRepository<ToDo, ToDoDto> toDoRepository, IMapper mapper)
+        public ToDoService(ICrudRepository<ToDo, ToDoDto> toDoRepository)
         {
             _toDoRepository = toDoRepository;
-            _mapper = mapper;
         }
 
         /// <summary>
@@ -125,15 +120,17 @@ namespace WorkApp.Service.Services
         }
         
         /// <summary>
-        /// Retrieves todoes of user that added for today.
+        /// Retrieves todoes of user that added or modified today.
         /// </summary>
         /// <param name="userId">Id of the application user.</param>
         public async Task<Result<List<ToDoDto>>> GetToDoesOfUserOfTodayAsync(string userId)
         {
-            return await _toDoRepository.GetAsync(x => x.AddedDate.Date == DateTime.Now.Date || x.ModifiedDate.Date == DateTime.Now.Date);
+            return await _toDoRepository.GetAsync(
+                x => 
+                x.UserId == userId && 
+                (x.AddedDate.Date == DateTime.Now.Date || x.ModifiedDate.Date == DateTime.Now.Date));
         }
-
-
+        
         /// <summary>
         /// Retrieves todoes of the user between two dates.
         /// </summary>
@@ -146,7 +143,7 @@ namespace WorkApp.Service.Services
 
             //Expression<Func<ToDo, bool>> TodoesOfUserBetweenDatesExpression = x =>                     
             Func<ToDo, bool> func = x =>
-                    (x.AddedDate > beginDate || x.ModifiedDate > beginDate)     // 
+                    (x.AddedDate > beginDate || x.ModifiedDate > beginDate) 
                     &&
                     (x.AddedDate < endDate || x.ModifiedDate < endDate)
                     &&
@@ -157,7 +154,6 @@ namespace WorkApp.Service.Services
             return await _toDoRepository.GetAsync(expression);
         }
         
-
         /// <summary>
         /// Adds new todo record and returns back <see cref="ToDoDto"/> with created entity Id.
         /// </summary>

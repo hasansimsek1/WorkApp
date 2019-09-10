@@ -5,7 +5,7 @@ using WorkApp.Common.DTOs;
 namespace WorkApp.Service.Interfaces
 {
     /// <summary>
-    /// Definitions of operations that consumed by the kanban board feature of the app.
+    /// Definitions of operations that can be consumed by the kanban board feature of the app.
     /// </summary>
     public interface IKanbanBoardService : IService
     {
@@ -43,16 +43,14 @@ namespace WorkApp.Service.Interfaces
         /// </summary>
         /// <param name="userId">Id of the application user.</param>
         Task<Result<KanbanBoardDto>> GetLastEditedKanbanBoardOfUserAsync(string userId);
-
-
-
+        
         /// <summary>
         /// Adds new kanban board.
         /// </summary>
         Task<Result<KanbanBoardDto>> AddAsync(KanbanBoardDto kanbanBoardDto);
 
         /// <summary>
-        /// Updates the kanban board record.
+        /// Updates the kanban board.
         /// </summary>
         Task<Result<KanbanBoardDto>> UpdateAsync(KanbanBoardDto kanbanBoardDto);
 

@@ -18,7 +18,7 @@ namespace WorkApp.UI.Wpf.ViewModel
         /// <summary>
         /// Get called by property setters when a change occurs.
         /// </summary>
-        /// <param name="propertyName">Name of the property that calls this method. This parameter is optained automatically by [CallerMemberName] attribute when not assigned.</param>
+        /// <param name="propertyName">Name of the property that calls this method. This parameter is optained automatically by <see cref="CallerMemberNameAttribute"/> when not assigned.</param>
         protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -26,8 +26,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
     {
         private readonly INoteService _noteService;
 
-
-
         /// <summary>
         /// Constructor for getting dependency injection. 
         /// Dependencies : <see cref="INoteService"/>
@@ -36,11 +34,9 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
         {
             _noteService = noteService;
         }
-
-
-
+        
         /// <summary>
-        /// Gets the note records, belong to the user, from service layer asynchronously and sends them to the view to be listed.
+        /// Retrieves the note records of the user from service layer asynchronously and sends them to the view to be listed.
         /// </summary>
         public async Task<IActionResult> Index()
         {
@@ -57,9 +53,6 @@ namespace WorkApp.UI.AspNetCoreMvc.Controllers
                 return View(result.Data);
             }
         }
-
-
-
 
         /// <summary>
         /// Returns the view that shows a WYSIWYG editor to the user.

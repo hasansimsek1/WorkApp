@@ -16,26 +16,33 @@ using WorkApp.Respository.Interfaces;
 namespace WorkApp.Respository.Repositories
 {
     /// <summary>
-    /// Generic repository pattern implementation. 
-    /// Not responsible for filtering soft-deleted records, service layer deals with it. (Maybe changed in the future)
+    /// Generic repository pattern implementation for CRUD operations on Sql Server databases. 
+    /// Responsible for filtering soft-deleted records and mapping between entites and data transfer objects.
+    /// 
     /// <para/>
-    /// Implements : <see cref="ICrudRepository{T}"/>
+    /// 
+    /// Implements : <see cref="ICrudRepository{TEntity, TDto}"/>
     /// </summary>
-    /// <typeparam name="T">Entity class that implements <see cref="IEntity"/> interface.</typeparam>
+    /// <typeparam name="TEntity">Entity class that implements <see cref="IEntityWithCommonProperties"/> interface.</typeparam>
+    /// <typeparam name="TDto">Entity class that implements <see cref="IDtoWithCommonProperties"/> interface.</typeparam>
 
 
-    public class SqlRespository<TEntity, TDto> : ICrudRepository<TEntity, TDto> where TDto : class, IDtoWithCommonProperties where TEntity : class, IEntityWithCommonProperties
+    public class SqlRespository<TEntity, TDto> : ICrudRepository<TEntity, TDto> 
+        where TDto : class, IDtoWithCommonProperties 
+        where TEntity : class, IEntityWithCommonProperties
     {
         private DbContext _dbContext;
-
         private readonly IMapper _mapper;
         private DbSet<TEntity> _entity;
 
         /// <summary>
-        /// Parameterless constructor that initializes new instance of <see cref="DbContext"/> using <see cref="AppDbContextFactory"/>.
+        /// Constructor that initializes new instance of <see cref="DbContext"/> using <see cref="AppDbContextFactory"/>.
         /// This constructor is being used by the Wpf application.
+        /// 
+        /// <para/>
+        /// 
+        /// Dependencies : <see cref="IMapper"/>
         /// </summary>
-
         public SqlRespository(IMapper mapper)
         {
             _dbContext = new AppDbContextFactory().CreateDbContext(new string[0]);
@@ -46,6 +53,10 @@ namespace WorkApp.Respository.Repositories
         /// <summary>
         /// Constructor with <see cref="DbContextOptions{T}"/> parameter that initializes <see cref="AppDbContext"/> with incoming options.
         /// This constructor is being used by the AspNetCoreMvc application.
+        /// 
+        /// <para/>
+        /// 
+        /// Dependencies : <see cref="IMapper"/>
         /// </summary>
         public SqlRespository(DbContextOptions<AppDbContext> options, IMapper mapper)
         {
@@ -53,10 +64,9 @@ namespace WorkApp.Respository.Repositories
             _entity = _dbContext.Set<TEntity>();
             _mapper = mapper;
         }
-
-
+        
         /// <summary>
-        /// Retrieves all the entity records.
+        /// Retrieves all entity records.
         /// </summary>
         public async Task<Result<List<TDto>>> GetAsync()
         {
@@ -76,7 +86,7 @@ namespace WorkApp.Respository.Repositories
         /// <summary>
         /// Retrieves the entity with the specified Id.
         /// </summary>
-        /// <param name="Id">Id of the entiry to be retrieved.</param>
+        /// <param name="Id">Id of the entity to be retrieved.</param>
         public async Task<Result<TDto>> GetAsync(int Id)
         {
             try
@@ -96,7 +106,7 @@ namespace WorkApp.Respository.Repositories
         }
 
         /// <summary>
-        /// Retrieves entities with the specified filters.
+        /// Retrieves entities with specified filters.
         /// </summary>
         public async Task<Result<List<TDto>>> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
@@ -153,6 +163,13 @@ namespace WorkApp.Respository.Repositories
             {
                 TEntity entity = _mapper.Map<TEntity>(entityDto);
 
+                var attachedEntity = _entity.Local.FirstOrDefault(entry => entry.Id.Equals(entityDto.Id));
+
+                if(attachedEntity != null)
+                {
+                    _dbContext.Entry(attachedEntity).State = EntityState.Detached;
+                }
+
                 entity.ModifiedDate = DateTime.Now;
 
                 _dbContext.Entry(entity).State = EntityState.Modified;
@@ -177,6 +194,13 @@ namespace WorkApp.Respository.Repositories
             {
                 TEntity entity = _mapper.Map<TEntity>(entityDto);
 
+                var attachedEntity = _entity.Local.FirstOrDefault(entry => entry.Id.Equals(entityDto.Id));
+
+                if (attachedEntity != null)
+                {
+                    _dbContext.Entry(attachedEntity).State = EntityState.Detached;
+                }
+
                 entity.IsDeleted = true;
                 entity.ModifiedDate = DateTime.Now;
 
@@ -199,144 +223,7 @@ namespace WorkApp.Respository.Repositories
         {
             return await _dbContext.SaveChangesAsync();
         }
-
-        #region önceki implementation
-
-        ///// <summary>
-        ///// Retrieves all the entity records.
-        ///// </summary>
-        //public async Task<Result<List<T>>> GetAsync()
-        //{
-        //    try
-        //    {
-        //        return new Result<List<T>>()
-        //        {
-        //            Data = await _entity.ToListAsync(),
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Result<List<T>>(ex, ExceptionLocations.SqlRepositoryGet);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Retrieves the entity with the specified Id.
-        ///// </summary>
-        ///// <param name="Id">Id of the entiry to be retrieved.</param>
-        //public async Task<Result<T>> GetAsync(int Id)
-        //{
-        //    try
-        //    {
-        //        return new Result<T>()
-        //        {
-        //            Data = await _entity.FindAsync(Id)
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Result<T>(ex, ExceptionLocations.SqlRepositoryGetById);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Retrieves entities with the specified filters.
-        ///// </summary>
-        //public async Task<Result<List<T>>> GetAsync(Expression<Func<T, bool>> filter)
-        //{
-        //    try
-        //    {
-        //        return new Result<List<T>>()
-        //        {
-        //            Data = await _entity.Where(filter).ToListAsync()
-        //        };
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Result<List<T>>(ex, ExceptionLocations.SqlRepositoryGetByFilter);
-        //    }
-        //}
-
-
-        ///// <summary>
-        ///// Inserts new entity.
-        ///// </summary>
-        ///// <param name="entity">Entity to be inserted.</param>
-        //public async Task<Result<T>> InsertAsync(T entity)
-        //{
-        //    try
-        //    {
-        //        DateTime datetimeNow = DateTime.Now;
-
-        //        entity.IsDeleted = false;
-        //        entity.AddedDate = datetimeNow;
-        //        entity.ModifiedDate = datetimeNow;
-        //        _entity.Add(entity);
-
-        //        await Save();
-
-        //        return new Result<T>(entity);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Result<T>(ex, ExceptionLocations.SqlRepositoryInsert, entity);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Updates the entity.
-        ///// </summary>
-        ///// <param name="entity">Entity to be updated.</param>
-        //public async Task<Result<T>> UpdateAsync(T entity)
-        //{
-        //    try
-        //    {
-        //        entity.ModifiedDate = DateTime.Now;
-
-        //        _dbContext.Entry(entity).State = EntityState.Modified;
-
-        //        await Save();
-
-        //        return new Result<T>(entity);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Result<T>(ex, ExceptionLocations.SqlRepositoryUpdate, entity);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Soft-deletes the entity.
-        ///// </summary>
-        ///// <param name="entity">Entity to be soft-deleted.</param>
-        //public async Task<Result<T>> DeleteAsync(T entity)
-        //{
-        //    try
-        //    {
-        //        entity.IsDeleted = true;
-        //        entity.ModifiedDate = DateTime.Now;
-        //        _dbContext.Entry(entity).State = EntityState.Modified;
-
-        //        await Save();
-
-        //        return new Result<T>(entity);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new Result<T>(ex, ExceptionLocations.SqlRepositoryDelete, entity);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Wrapper for DbContex.SaveCahngesAsync() method.
-        ///// </summary>
-        //private async Task<int> Save()
-        //{
-        //    return await _dbContext.SaveChangesAsync();
-        //}
-
-        #endregion önceki implementation
-
+        
         private bool disposed = false;
 
         public void Dispose()

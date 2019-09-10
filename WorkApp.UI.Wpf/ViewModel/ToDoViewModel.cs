@@ -14,6 +14,10 @@ namespace WorkApp.UI.Wpf.ViewModel
 {
     /// <summary>
     /// View model that is bound to the MainWindowToDoUserControl user control. 
+    /// 
+    /// <para/>
+    /// 
+    /// Implements : <see cref="IToDoViewModel"/>
     /// </summary>
     public class ToDoViewModel : ViewModelBase, IToDoViewModel
     {
@@ -26,10 +30,10 @@ namespace WorkApp.UI.Wpf.ViewModel
 
 
         /// <summary>
-        /// Initializes ToDoes observable collection, binds a method to the ToDoes.CollectionChanged event and 
-        /// dependency injection mechanism injects relevant ToDo service via ICrudService<ToDo> parameter.
+        /// Initializes ToDoes observable collection, binds a method to the ToDoes.CollectionChanged event. 
+        /// Dependency injection mechanism injects relevant ToDo service via IToDoService argument.
         /// </summary>
-        /// <param name="toDoService">Related todo service that injected by dependency injector</param>
+        /// <param name="toDoService">Related todo service that injected by dependency injector.</param>
         public ToDoViewModel(IToDoService toDoService)
         {
             ToDoes = new ObservableCollection<ToDoBindingModel>();
@@ -70,13 +74,6 @@ namespace WorkApp.UI.Wpf.ViewModel
 
             result = await _toDoService.UpdateAsync(toDoDto);
 
-            //ToDo toDoEntity = result.Data;
-            //toDoEntity.IsCompleted = toDoBindingModel.IsCompleted;
-            //toDoEntity.IsDeleted = toDoBindingModel.IsDeleted;
-            //toDoEntity.Text = toDoBindingModel.Text;
-
-            //result = await _toDoService.UpdateAsync(toDoEntity);
-
             if (result.HasError)
                 System.Windows.Forms.MessageBox.Show("An error has occured while updating the record!");
 
@@ -84,9 +81,8 @@ namespace WorkApp.UI.Wpf.ViewModel
 
 
         /// <summary>
-        /// Gets todo records from service layer asynchronously and fills the ToDoes observable collection.
+        /// Retrieves todo records from service layer asynchronously and fills the ToDoes observable collection.
         /// </summary>
-        /// <returns></returns>
         public async Task LoadAsync()
         {
             var result = await _toDoService.GetAllAsync();
@@ -112,7 +108,7 @@ namespace WorkApp.UI.Wpf.ViewModel
 
 
         /// <summary>
-        /// Command that binds DeleteToDo method to UI via RelayCommand<ToDoBindingModel>(DeleteToDo).
+        /// Binds DeleteToDo method to UI using <see cref="RelayCommand{T}"/>.
         /// </summary>
         public ICommand DeleteToDoCommand
         {
@@ -132,7 +128,7 @@ namespace WorkApp.UI.Wpf.ViewModel
 
 
         /// <summary>
-        /// Command that binds AddToDo method to UI via RelayCommand<object>(AddToDo).
+        /// Binds AddToDo method to UI using <see cref="RelayCommand{T}"/>
         /// </summary>
         public ICommand AddToDoCommand
         {

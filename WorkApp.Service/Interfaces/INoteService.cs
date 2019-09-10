@@ -5,7 +5,7 @@ using WorkApp.Common.DTOs;
 namespace WorkApp.Service.Interfaces
 {
     /// <summary>
-    /// Definitions of operations that consumed by the note taking feature of the app.
+    /// Definitions of operations that can be consumed by the note taking feature of the app.
     /// </summary>
     public interface INoteService : IService
     {

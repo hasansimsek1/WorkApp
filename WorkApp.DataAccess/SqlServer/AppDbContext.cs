@@ -21,8 +21,7 @@ namespace WorkApp.DataAccess.SqlServer
          */
 
 
-
-
+            
         /// <summary>
         /// Info : There must be single constructor to be able to apply pooling logic to database context.
         /// </summary>
