@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="WorkApp.UI.Wpf.View.HeaderUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+             xmlns:MaterialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+             >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+
+    <Grid>
+
+    
+    <MaterialDesign:PopupBox
+                                                 WindowChrome.IsHitTestVisibleInChrome="True"
+                                                 Style="{StaticResource MaterialDesignMultiFloatingActionAccentPopupBox}" 
+                                                 Margin="8,8,30,8" 
+                                                 VerticalAlignment="Center" 
+                                                 HorizontalAlignment="Right"
+                                                 PlacementMode="BottomAndAlignCentres" IsHitTestVisible="True">
+        <StackPanel>
+            <Button x:Name="MakeWindowMobileButton" 
+                                            Background="{DynamicResource SecondaryAccentBrush}" 
+                                            Foreground="{DynamicResource SecondaryAccentForegroundBrush}"
+                                            Click="MakeWindowMobileButton_Click">
+                <MaterialDesign:PackIcon Kind="MobilePhone"/>
+            </Button>
+            <Button x:Name="MaximizeWindowButton"
+                                            Background="{DynamicResource SecondaryAccentBrush}"
+                                            Foreground="{DynamicResource SecondaryAccentForegroundBrush}"
+                                            Click="MaximizeWindowButton_Click">
+                <MaterialDesign:PackIcon Kind="WindowMaximize"/>
+            </Button>
+            <Button x:Name="MinimizeWindowButton" 
+                                            Background="{DynamicResource SecondaryAccentBrush}" 
+                                            Foreground="{DynamicResource SecondaryAccentForegroundBrush}"
+                                            Click="MinimizeWindowButton_Click">
+                <MaterialDesign:PackIcon Kind="WindowMinimize"/>
+            </Button>
+            <Button x:Name="CloseAppButton"
+                                            Background="{DynamicResource SecondaryAccentBrush}"
+                                            Foreground="{DynamicResource SecondaryAccentForegroundBrush}" 
+                                            Click="CloseAppButton_Click">
+                <MaterialDesign:PackIcon Kind="Power"/>
+            </Button>
+            <Button x:Name="HideContentButton"
+                                            Background="{DynamicResource SecondaryAccentBrush}"
+                                            Foreground="{DynamicResource SecondaryAccentForegroundBrush}"
+                                            Click="HideContentButton_Click"
+                                        >
+                <MaterialDesign:PackIcon Kind="Visibility"/>
+            </Button>
+        </StackPanel>
+    </MaterialDesign:PopupBox>
+    </Grid>
+
+</UserControl>
